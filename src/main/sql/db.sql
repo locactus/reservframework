@@ -57,6 +57,6 @@ create table request(
 
 insert into staff(staffId, firstname, lastname, phonenumber, email, username, password) values(1001, 'Carl', 'Y', '641-452-2298', 'carly@gmail.com', 'admin', 'admin');
 insert into clien(clientId, firstname, lastname, phonenumber, email) values(2001, 'Eleven', 'K', '641-987-9987', 'elevenk@gmail.com');
-insert into timeslot(timeslotId, starttime, endtime) values(3001, current_timestamp, current_timestamp);
+insert into timeslot(timeslotId, starttime, endtime) values(3001, NOW(), DATE_ADD(NOW(), INTERVAL 1 HOUR));
 insert into appointment(appointmentId, timeslotId, clientId) values(4001, 3001, 2001);
 insert into request(requestId, appointmentId) values(5001, 4001);
