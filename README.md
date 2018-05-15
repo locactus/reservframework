@@ -2,12 +2,6 @@
 ASD course project: A framework to implement the reservation system.
 
 
-## Team Members:
-- Cun Yang
-- Yuliang Jin
-- Wenqiang Li
-
-
 ## Description:
 ### Framework Part:
 We plan to design a reservation  web framework  to implement the reservation-like systems more easily and quickly.
