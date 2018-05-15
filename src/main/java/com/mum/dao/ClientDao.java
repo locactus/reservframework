@@ -37,4 +37,35 @@ public class ClientDao extends BaseDao {
         super.conn.close();
         return client;
     }
+
+    public Client getClientByFirstname(String firstname) {
+        Connection conn = DataSource.getInstance().getConnection();
+        Client client = null;
+        try {
+            String sql = "SELECT * FROM client WHERE firstname = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, firstname);
+            ResultSet rset = pstmt.executeQuery();
+            int numcols = rset.getMetaData().getColumnCount();
+
+            if (!rset.isBeforeFirst()) {
+                // Empty table
+                return null;
+            }
+
+            rset.next();
+            String lastName = rset.getString("lastname");
+            String phoneNumber = rset.getString("phonenumber");
+            String email = rset.getString("email");
+
+            client = new Client();
+            client.setFirstName(firstname);
+            client.setLastName(lastName);
+            client.setPhoneNumber(phoneNumber);
+            client.setEmail(email);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return client;
+    }
 }
