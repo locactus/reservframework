@@ -22,7 +22,7 @@
      -->
     <form action="" class="form-horizontal">
         <fieldset>
-            <legend>Test</legend>
+            <legend>Add time slot</legend>
 
             <!-- T1 时间精确到年月日时分秒：2017-07-13 02:25:07am-->
             <div class="control-group">
