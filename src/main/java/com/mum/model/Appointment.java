@@ -1,31 +1,31 @@
 package com.mum.model;
 
 public class Appointment {
-    private String appointmentId;
-    private String timeslotId;
-    private String clientId;
+    private int appointmentId;
+    private int timeslotId;
+    private int clientId;
 
-    public String getAppointmentId() {
+    public int getAppointmentId() {
         return appointmentId;
     }
 
-    public void setAppointmentId(String appointmentId) {
+    public void setAppointmentId(int appointmentId) {
         this.appointmentId = appointmentId;
     }
 
-    public String getTimeslotId() {
+    public int getTimeslotId() {
         return timeslotId;
     }
 
-    public void setTimeslotId(String timeslotId) {
+    public void setTimeslotId(int timeslotId) {
         this.timeslotId = timeslotId;
     }
 
-    public String getClientId() {
+    public int getClientId() {
         return clientId;
     }
 
-    public void setClientId(String clientId) {
+    public void setClientId(int clientId) {
         this.clientId = clientId;
     }
 

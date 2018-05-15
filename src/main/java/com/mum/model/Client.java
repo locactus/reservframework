@@ -1,17 +1,17 @@
 package com.mum.model;
 
 public class Client {
-    private String clientId;
+    private int clientId;
     private String firstName;
     private String lastName;
     private String phoneNumber;
     private String email;
 
-    public String getClientId() {
+    public int getClientId() {
         return clientId;
     }
 
-    public void setClientId(String clientId) {
+    public void setClientId(int clientId) {
         this.clientId = clientId;
     }
 

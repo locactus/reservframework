@@ -3,18 +3,20 @@ package com.mum.model;
 import com.mum.model.enums.RequestState;
 import com.mum.model.enums.RequestType;
 
+import java.util.Date;
+
 public class Request {
-    private String requestId;
+    private int requestId;
     private RequestType type;
     private RequestState state;
-    private String appointmentId;
-    private String datetimeCreated;
+    private int appointmentId;
+    private Date datetimeCreated;
 
-    public String getRequestId() {
+    public int getRequestId() {
         return requestId;
     }
 
-    public void setRequestId(String requestId) {
+    public void setRequestId(int requestId) {
         this.requestId = requestId;
     }
 
@@ -34,19 +36,19 @@ public class Request {
         this.state = state;
     }
 
-    public String getAppointmentId() {
+    public int getAppointmentId() {
         return appointmentId;
     }
 
-    public void setAppointmentId(String appointmentId) {
+    public void setAppointmentId(int appointmentId) {
         this.appointmentId = appointmentId;
     }
 
-    public String getDatetimeCreated() {
+    public Date getDatetimeCreated() {
         return datetimeCreated;
     }
 
-    public void setDatetimeCreated(String datetimeCreated) {
+    public void setDatetimeCreated(Date datetimeCreated) {
         this.datetimeCreated = datetimeCreated;
     }
 

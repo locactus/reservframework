@@ -3,15 +3,15 @@ package com.mum.model;
 import java.util.Date;
 
 public class Timeslot {
-    private String timeslotId;
+    private int timeslotId;
     private Date startTime;
     private Date endTime;
 
-    public String getTimeslotId() {
+    public int getTimeslotId() {
         return timeslotId;
     }
 
-    public void setTimeslotId(String timeslotId) {
+    public void setTimeslotId(int timeslotId) {
         this.timeslotId = timeslotId;
     }
 

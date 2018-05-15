@@ -1,4 +1,6 @@
 package com.mum.model.enums;
 
-public class RequestState {
+public enum  RequestState {
+    PENDING,  // 0 -> pending
+    ACCEPT  // 1 -> accept
 }

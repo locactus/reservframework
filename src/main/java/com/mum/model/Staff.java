@@ -1,7 +1,7 @@
 package com.mum.model;
 
 public class Staff {
-    private String staffId;
+    private int staffId;
     private String firstName;
     private String lastName;
     private String phoneNumber;
@@ -9,11 +9,11 @@ public class Staff {
     private String userName;
     private String password;
 
-    public String getStaffId() {
+    public int getStaffId() {
         return staffId;
     }
 
-    public void setStaffId(String staffId) {
+    public void setStaffId(int staffId) {
         this.staffId = staffId;
     }
 
