@@ -1,4 +1,4 @@
-package com.mum.servlets;
+package com.mum.controller;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
