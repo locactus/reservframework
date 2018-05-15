@@ -46,7 +46,11 @@ public class DataSource {
         //
         System.out.println("Setting up driver.");
         try {
-            String connectUri = "jdbc:mysql://167.99.1.180:3306/reservdb?useSSL=false";
+//            String connectUri = "jdbc:mysql://167.99.1.180:3306/reservdb?useSSL=false";
+//            String connectUri = "jdbc:mysql://206.189.206.96:3306/reservdb?useSSL=false";
+            String connectUri = "jdbc:mysql://206.189.227.161:3306/reservdb?useSSL=false";
+
+
             String uname = "root";
             String passwd = "123456";
             setupDriver(connectUri, uname, passwd);
@@ -127,16 +131,5 @@ public class DataSource {
     public void shutdownDriver() throws Exception {
         PoolingDriver driver = (PoolingDriver) DriverManager.getDriver("jdbc:apache:commons:dbcp:");
         driver.closePool("framework");
-    }
-
-    public Connection normalDataSource() {
-        Connection conn = null;
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-            conn = DriverManager.getConnection("jdbc:mysql://167.99.1.180:3306/reservdb?useSSL=false", "root", "123456");
-        } catch (Exception ex) {
-            System.out.println(ex);
-        }
-        return conn;
     }
 }
