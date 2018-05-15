@@ -51,7 +51,7 @@ public class DataSource {
             String connectUri = "jdbc:mysql://206.189.227.161:3306/reservdb?useSSL=false";
 
 
-            String uname = "root";
+            String uname = "myuser";
             String passwd = "123456";
             setupDriver(connectUri, uname, passwd);
         } catch (Exception e) {

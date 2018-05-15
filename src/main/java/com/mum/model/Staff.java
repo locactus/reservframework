@@ -2,7 +2,7 @@ package com.mum.model;
 
 public class Staff {
     private String staffId;
-    private String firsNname;
+    private String firstName;
     private String lastName;
     private String phoneNumber;
     private String email;
@@ -17,12 +17,12 @@ public class Staff {
         this.staffId = staffId;
     }
 
-    public String getFirsNname() {
-        return firsNname;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirsNname(String firsNname) {
-        this.firsNname = firsNname;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {
@@ -69,7 +69,7 @@ public class Staff {
     public String toString() {
         return "Staff{" +
                 "staffId='" + staffId + '\'' +
-                ", firsNname='" + firsNname + '\'' +
+                ", firsName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", email='" + email + '\'' +
