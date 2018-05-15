@@ -14,7 +14,7 @@
     <tr>
         <th>No.</th>
         <th>timeslot</th>
-        <th>contact User </th>
+        <th>contact User</th>
         <th>state</th>
         <th>Operator</th>
     </tr>
