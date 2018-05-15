@@ -14,3 +14,11 @@ With this framework, we will implement a web system for DMV, to let the people u
 - Java
 - Servlet
 - MySQL
+
+## Servlet API
+### Add an appointment
+/appointment?action=add&firstname=james&lastname=liu&phonenumber=9871222234&email=james@mum.edu&starttime=2018-05-09.09:15:00&endtime=2018-05-09.10:15:00
+### Get appointments of a day
+/appointment?action=list&date=2018-04-21
+### Confirm an appointment
+/appointment?action=confirm&staffname=manager
