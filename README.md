@@ -1,4 +1,4 @@
-# reservation-framework
+# reservation-framework [![CircleCI](https://circleci.com/gh/asd-framework/reservframework.svg?style=svg)](https://circleci.com/gh/asd-framework/reservframework)
 ASD course project: A framework to implement the reservation system.
 
 
