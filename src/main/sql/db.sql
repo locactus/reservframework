@@ -31,6 +31,7 @@ create table timeslot(
   timeslotId int not null auto_increment,
   starttime datetime not null,
   endtime datetime not null,
+  uuid varchar(50),
   primary key(timeslotId)
 );
 

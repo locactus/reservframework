@@ -20,6 +20,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @WebServlet(urlPatterns = "/appointment")
@@ -148,8 +149,12 @@ public class AppointmentServlet extends HttpServlet {
     String endDate = req.getParameter("endDate");
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     Timeslot timeslot = null;
+    String uuid = UUID.randomUUID().toString();
+
     try {
       timeslot = new Timeslot(sdf.parse(startDate), sdf.parse(endDate));
+
+      timeslot.setUuid(uuid);
       timeslotDao.insert(timeslot);
     } catch (ParseException e) {
       e.printStackTrace();
@@ -166,17 +171,18 @@ public class AppointmentServlet extends HttpServlet {
         client = temp;
       }
 
-      Appointment appointment = new Appointment(timeslot.getTimeslotId(), client.getClientId());
+      Timeslot byUuid = timeslotDao.getByUuid(uuid);
+      Client byFirstname = clientDao.getClientByFirstname(firstName);
+      Appointment appointment = new Appointment(byUuid.getTimeslotId(), byFirstname.getClientId());
+
       appointmentDao.insert(appointment);
       Request request = new Request();
       request.setAppointmentId(appointment.getAppointmentId());
       request.setType(RequestType.MAKE);
       request.setDatetimeCreated(new Date());
       requestDao.insert(request);
-      req.getRequestDispatcher(req.getContextPath() + "/appoList.jsp").forward(req, resp);
+      resp.sendRedirect(req.getContextPath() + "/appointment?action=listofUser");
     } catch (SQLException e) {
-      e.printStackTrace();
-    } catch (ServletException e) {
       e.printStackTrace();
     } catch (IOException e) {
       e.printStackTrace();

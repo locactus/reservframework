@@ -33,6 +33,25 @@ public class TimeslotDAO extends BaseDAO implements ITimeslotDAO {
         return timeslot;
     }
 
+    public Timeslot getByUuid(String uuid) throws SQLException{
+        super.conn = DataSource.getInstance().getConnection();
+        String sql = "SELECT * FROM timeslot where uuid = (?)";
+        PreparedStatement pstmt = super.conn.prepareStatement(sql);
+        pstmt.setString(1, uuid);
+        ResultSet rset = pstmt.executeQuery();
+        Timeslot timeslot = new Timeslot();
+
+        while(rset.next()) {
+            Date startTime = new Date(rset.getTimestamp("starttime").getTime());
+            Date endTime = new Date(rset.getTimestamp("endtime").getTime());
+            timeslot.setUuid(uuid);
+            timeslot.setTimeslotId(rset.getInt("timeslotId"));
+            timeslot.setStartTime(startTime);
+            timeslot.setEndTime(endTime);
+        }
+        return timeslot;
+    }
+
     @Override
     public List<Timeslot> getAll() throws SQLException {
         List<Timeslot> result = null;
@@ -68,11 +87,11 @@ public class TimeslotDAO extends BaseDAO implements ITimeslotDAO {
     @Override
     public int insert(Timeslot timeslot) throws SQLException {
         conn = DataSource.getInstance().getConnection();
-        String sql = "INSERT INTO timeslot(starttime, endtime) VALUES(?, ?)";
+        String sql = "INSERT INTO timeslot(starttime, endtime, uuid) VALUES(?, ?, ?)";
         PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         pstmt.setTimestamp(1,new Timestamp(timeslot.getStartTime().getTime()));
         pstmt.setTimestamp(2, new Timestamp(timeslot.getEndTime().getTime()));
-        System.out.println(pstmt);
+        pstmt.setString(3, timeslot.getUuid());
         pstmt.executeUpdate();
         ResultSet keys = pstmt.getGeneratedKeys();
         keys.next();

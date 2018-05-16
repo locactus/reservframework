@@ -6,6 +6,15 @@ public class Timeslot {
     private int timeslotId;
     private Date startTime;
     private Date endTime;
+    private String uuid;
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
 
     public Timeslot() {
     }

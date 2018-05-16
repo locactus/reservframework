@@ -26,4 +26,9 @@ public class TimeslotDAO extends BaseDAO implements ITimeslotDAO {
     public Timeslot getByTimeslotId(int timeslotId) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    @Override
+    public Timeslot getByUuid(String uuid) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }
