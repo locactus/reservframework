@@ -1,15 +1,16 @@
 package com.mum.servlets;
 
-import com.mum.dao.AppointmentDao;
-import com.mum.dao.ClientDao;
-import com.mum.dao.RequestDao;
-import com.mum.dao.StaffDao;
-import com.mum.dao.TimeslotDao;
+import com.mum.dao.mysql.AppointmentDao;
+import com.mum.dao.mysql.ClientDao;
+import com.mum.dao.mysql.RequestDao;
+import com.mum.dao.mysql.StaffDao;
+import com.mum.dao.mysql.TimeslotDao;
 import com.mum.dto.AppointmentDTO;
 import com.mum.model.Appointment;
 import com.mum.model.Client;
 import com.mum.model.Request;
 import com.mum.model.Timeslot;
+import com.mum.model.enums.RequestState;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -36,7 +37,7 @@ public class AppointmentServlet extends HttpServlet {
     String action = req.getParameter("action");
     if(action.equals("add")) {
       addAppointment(req, resp);
-    } else if(action.equals("list")) {
+    } else if(action.equals("listOfUser")) {
       listAllAppointment(req, resp);
     } else if(action.equals("confirm")) {
       confirmAppointment(req, resp);
@@ -76,7 +77,9 @@ public class AppointmentServlet extends HttpServlet {
     Request request = new Request();
     try {
       List<Request> requestsByAppointmentId = requestDao.getRequestsByAppointmentId(apointment.getAppointmentId());
-      request = requestsByAppointmentId.get(0);
+      if(requestsByAppointmentId != null && requestsByAppointmentId.size()>0) {
+        request = requestsByAppointmentId.get(0);
+      }
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -87,16 +90,17 @@ public class AppointmentServlet extends HttpServlet {
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    appointmentDTO.setEmail(user.getEmail());
-    appointmentDTO.setFirstName(user.getFirstName());
-    appointmentDTO.setLastName(user.getLastName());
-    appointmentDTO.setPhoneNumber(user.getPhoneNumber());
-    appointmentDTO.setState(request.getState());
+    appointmentDTO.setEmail(user != null ? user.getEmail() : "");
+    appointmentDTO.setFirstName(user != null ? user.getFirstName() : "");
+    appointmentDTO.setLastName(user != null ? user.getLastName() : "");
+    appointmentDTO.setPhoneNumber(user != null ? user.getPhoneNumber() : "");
+    appointmentDTO.setState(request != null ? request.getState() : RequestState.PENDING);
     appointmentDTO.setTimeslot(timeslot);
     return appointmentDTO;
   }
 
   private void addAppointment(HttpServletRequest req, HttpServletResponse resp) {
+
 
   }
 

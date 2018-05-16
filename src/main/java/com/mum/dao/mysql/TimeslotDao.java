@@ -21,14 +21,15 @@ public class TimeslotDao extends BaseDao implements ITimeslotDao {
         PreparedStatement pstmt = super.conn.prepareStatement(sql);
         pstmt.setInt(1, timeslotId);
         ResultSet rset = pstmt.executeQuery();
-
-        Date startTime = new Date(rset.getTimestamp("starttime").getTime());
-        Date endTime = new Date(rset.getTimestamp("endtime").getTime());
-
         Timeslot timeslot = new Timeslot();
-        timeslot.setTimeslotId(timeslotId);
-        timeslot.setStartTime(startTime);
-        timeslot.setEndTime(endTime);
+
+        while(rset.next()) {
+            Date startTime = new Date(rset.getTimestamp("starttime").getTime());
+            Date endTime = new Date(rset.getTimestamp("endtime").getTime());
+            timeslot.setTimeslotId(timeslotId);
+            timeslot.setStartTime(startTime);
+            timeslot.setEndTime(endTime);
+        }
         return timeslot;
     }
 
