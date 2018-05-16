@@ -1,8 +1,6 @@
 package com.mum.dao;
 
-import com.mum.model.Appointment;
 import com.mum.model.Timeslot;
-import com.sun.tools.corba.se.idl.constExpr.Times;
 import org.junit.Test;
 
 import java.sql.SQLException;

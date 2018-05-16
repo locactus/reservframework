@@ -1,6 +1,5 @@
 package com.mum.dao;
 
-import com.mum.model.Appointment;
 import com.mum.model.Request;
 import com.mum.model.enums.RequestState;
 import com.mum.model.enums.RequestType;
