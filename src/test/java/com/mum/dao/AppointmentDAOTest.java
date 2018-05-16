@@ -94,4 +94,14 @@ public class AppointmentDAOTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void getAppointmentByAppointmentId() {
+        try {
+            Appointment appointmentById = dao.getAppointmentById(4004);
+            System.out.println(appointmentById);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

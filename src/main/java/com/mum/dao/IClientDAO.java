@@ -8,4 +8,5 @@ public interface IClientDAO {
     List<Client> getAll() throws SQLException;
     Client getClientByClientId(int clientId) throws SQLException;
     Client getClientByFirstname(String firstname) throws SQLException;
+    boolean addClient(Client client);
 }

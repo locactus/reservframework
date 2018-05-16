@@ -7,6 +7,14 @@ public class Timeslot {
     private Date startTime;
     private Date endTime;
 
+    public Timeslot() {
+    }
+
+    public Timeslot(Date startTime, Date endTime) {
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+
     public int getTimeslotId() {
         return timeslotId;
     }

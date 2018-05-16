@@ -106,4 +106,33 @@ public class ClientDAO extends BaseDAO implements IClientDAO {
         client.setEmail(email);
         return client;
     }
+
+    @Override
+    public boolean addClient(Client client) {
+        Connection conn = DataSource.getInstance().getConnection();
+        String sql = "insert into client(firstname, lastname, phonenumber, email) values(?, ?, ?, ?)";
+        PreparedStatement pstmt = null;
+        try {
+            pstmt = conn.prepareStatement(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            pstmt.setString(1, client.getFirstName());
+            pstmt.setString(2, client.getLastName());
+            pstmt.setString(3, client.getPhoneNumber());
+            pstmt.setString(4, client.getEmail());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            return pstmt.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return true;
+
+    }
+
 }

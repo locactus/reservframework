@@ -21,4 +21,9 @@ public class ClientDAO extends BaseDAO implements IClientDAO {
     public List<Client> getAll() throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    @Override
+    public boolean addClient(Client client) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

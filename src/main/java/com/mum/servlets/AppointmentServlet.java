@@ -7,6 +7,7 @@ import com.mum.model.Client;
 import com.mum.model.Request;
 import com.mum.model.Timeslot;
 import com.mum.model.enums.RequestState;
+import com.mum.model.enums.RequestType;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,6 +18,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -142,8 +144,35 @@ public class AppointmentServlet extends HttpServlet {
     String lastName = req.getParameter("lastName");
     String phoneNumber = req.getParameter("phoneNumber");
     String email = req.getParameter("email");
+    Client client = null;
+    try {
+      Client clientByFirstname = clientDao.getClientByFirstname(firstName);
+      if(clientByFirstname != null) {
+        client = clientByFirstname;
+      } else {
+        Client temp = new Client(firstName, lastName, phoneNumber, email);
+        clientDao.addClient(temp);
+        client = temp;
+      }
+      Timeslot timeslot = new Timeslot(new Date(timeslotStrs[0]), new Date(timeslotStrs[1]));
+      timeslotDao.insert(timeslot);
 
-    Client client = new Client(firstName, lastName, phoneNumber, email);
+      Appointment appointment = new Appointment(timeslot.getTimeslotId(), client.getClientId());
+      appointmentDao.insert(appointment);
+      Request request = new Request();
+      request.setAppointmentId(appointment.getAppointmentId());
+      request.setType(RequestType.MAKE);
+      request.setDatetimeCreated(new Date());
+      requestDao.insert(request);
+      req.getRequestDispatcher(req.getContextPath() + "/appoList.jsp").forward(req, resp);
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } catch (ServletException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
   }
   private void addTimeSlot(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException, ParseException {
     String startDate = req.getParameter("startDate");

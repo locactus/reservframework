@@ -11,6 +11,11 @@ public class Appointment {
         this.clientId = clientId;
     }
 
+    public Appointment(int timeslotId, int clientId) {
+        this.timeslotId = timeslotId;
+        this.clientId = clientId;
+    }
+
     public Appointment() {
 
     }
