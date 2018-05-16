@@ -1,6 +1,5 @@
 package com.mum.dao;
 
-import com.mum.dao.mysql.RequestDao;
 import com.mum.model.Request;
 import com.mum.model.enums.RequestState;
 import com.mum.model.enums.RequestType;
@@ -13,8 +12,8 @@ import static org.junit.Assert.*;
 
 public class RequestDaoTest {
     IRequestDao dao = null;
-    public RequestDaoTest() {
-        dao = DataAccess.createRequestDao();
+    public RequestDaoTest() throws IllegalAccessException, InstantiationException, ClassNotFoundException {
+        dao = DataAccessFactory.createRequestDao();
     }
 
     @Test

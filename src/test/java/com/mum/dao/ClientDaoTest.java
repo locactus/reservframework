@@ -1,6 +1,5 @@
 package com.mum.dao;
 
-import com.mum.dao.mysql.ClientDao;
 import com.mum.model.Client;
 import org.junit.Test;
 
@@ -11,8 +10,8 @@ import static org.junit.Assert.*;
 public class ClientDaoTest {
     IClientDao dao = null;
 
-    public ClientDaoTest() {
-        dao = DataAccess.createClientDao();
+    public ClientDaoTest() throws IllegalAccessException, InstantiationException, ClassNotFoundException {
+        dao = DataAccessFactory.createClientDao();
     }
 
     @Test

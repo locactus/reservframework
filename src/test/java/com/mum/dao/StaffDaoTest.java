@@ -11,8 +11,8 @@ import static org.junit.Assert.*;
 public class StaffDaoTest {
     IStaffDao dao = null;
 
-    public StaffDaoTest() {
-        dao = DataAccess.createStaffDao();
+    public StaffDaoTest() throws IllegalAccessException, InstantiationException, ClassNotFoundException {
+        dao = DataAccessFactory.createStaffDao();
     }
 
     @Test
