@@ -1,5 +1,6 @@
-package com.mum.dao;
+package com.mum.dao.mysql;
 
+import com.mum.dao.IClientDao;
 import com.mum.datasource.DataSource;
 import com.mum.model.Client;
 
@@ -8,8 +9,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ClientDao extends BaseDao {
+public class ClientDao extends BaseDao implements IClientDao {
 
+    @Override
     public Client getClientByClientId(int clientId) throws SQLException {
         Client client = null;
         String sql = "SELECT * FROM client WHERE clientId = ?";
@@ -39,34 +41,31 @@ public class ClientDao extends BaseDao {
         return client;
     }
 
-    public Client getClientByFirstname(String firstname) {
+    @Override
+    public Client getClientByFirstname(String firstname) throws SQLException {
         Connection conn = DataSource.getInstance().getConnection();
         Client client = null;
-        try {
-            String sql = "SELECT * FROM client WHERE firstname = ?";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, firstname);
-            ResultSet rset = pstmt.executeQuery();
-            int numcols = rset.getMetaData().getColumnCount();
+        String sql = "SELECT * FROM client WHERE firstname = ?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, firstname);
+        ResultSet rset = pstmt.executeQuery();
+        int numcols = rset.getMetaData().getColumnCount();
 
-            if (!rset.isBeforeFirst()) {
-                // Empty table
-                return null;
-            }
-
-            rset.next();
-            String lastName = rset.getString("lastname");
-            String phoneNumber = rset.getString("phonenumber");
-            String email = rset.getString("email");
-
-            client = new Client();
-            client.setFirstName(firstname);
-            client.setLastName(lastName);
-            client.setPhoneNumber(phoneNumber);
-            client.setEmail(email);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if (!rset.isBeforeFirst()) {
+            // Empty table
+            return null;
         }
+
+        rset.next();
+        String lastName = rset.getString("lastname");
+        String phoneNumber = rset.getString("phonenumber");
+        String email = rset.getString("email");
+
+        client = new Client();
+        client.setFirstName(firstname);
+        client.setLastName(lastName);
+        client.setPhoneNumber(phoneNumber);
+        client.setEmail(email);
         return client;
     }
 }

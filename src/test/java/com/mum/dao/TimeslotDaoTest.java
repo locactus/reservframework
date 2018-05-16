@@ -10,10 +10,10 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class TimeslotDaoTest {
-    TimeslotDao dao = null;
+    ITimeslotDao dao = null;
 
-    public TimeslotDaoTest() {
-        dao = new TimeslotDao();
+    public TimeslotDaoTest() throws IllegalAccessException, InstantiationException, ClassNotFoundException {
+        dao = DataAccessFactory.createTimeslotDao();
     }
 
     @Test

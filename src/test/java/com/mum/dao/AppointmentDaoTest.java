@@ -9,11 +9,13 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class AppointmentDaoTest {
-    AppointmentDao dao = null;
+    IAppointmentDao dao = null;
 
-    public AppointmentDaoTest() {
-        dao = new AppointmentDao();
+    public AppointmentDaoTest() throws IllegalAccessException, InstantiationException, ClassNotFoundException {
+//        dao = new AppointmentDao();
+        dao = DataAccessFactory.createAppointmentDao();
     }
+
 
     @Test
     public void insert() {

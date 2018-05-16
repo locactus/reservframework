@@ -1,4 +1,4 @@
-package com.mum.dao;
+package com.mum.dao.mysql;
 
 import com.mum.datasource.DataSource;
 

@@ -1,8 +1,8 @@
-package com.mum.dao;
+package com.mum.dao.mysql;
 
+import com.mum.dao.IRequestDao;
 import com.mum.datasource.DataSource;
 import com.mum.model.Request;
-import com.mum.model.Timeslot;
 import com.mum.model.enums.RequestState;
 import com.mum.model.enums.RequestType;
 
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class RequestDao extends BaseDao {
+public class RequestDao extends BaseDao implements IRequestDao {
 
     private List<Request> _get(String sql) throws SQLException{
         List<Request> result = null;
@@ -51,15 +51,17 @@ public class RequestDao extends BaseDao {
         return result;
     }
 
+    @Override
     public List<Request> getAll() throws SQLException {
         return this._get("SELECT * FROM request");
     }
 
+    @Override
     public List<Request> getRequestsByAppointmentId(int apotmentId) throws SQLException {
         return this._get("SELECT * FROM request WHERE appointmentId = " + apotmentId);
     }
 
-
+    @Override
     public int insert(Request request) throws SQLException {
         conn = DataSource.getInstance().getConnection();
         String sql = "INSERT INTO request(appointmentId, type, state) VALUES(?, ?, ?)";
@@ -76,6 +78,7 @@ public class RequestDao extends BaseDao {
         return requestId;
     }
 
+    @Override
     public boolean delete(int requestId) throws SQLException {
         conn = DataSource.getInstance().getConnection();
         String sql = "DELETE FROM request WHERE requestId = ? ";
@@ -87,6 +90,7 @@ public class RequestDao extends BaseDao {
         return true;
     }
 
+    @Override
     public boolean update(Request request) throws SQLException {
         conn = DataSource.getInstance().getConnection();
         String SQL = "UPDATE request SET state = ? WHERE requestId = ?";
