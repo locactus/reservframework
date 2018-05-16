@@ -6,10 +6,18 @@
     <link href="css/bootstrap.min.css" rel="stylesheet" >
     <script src="/js/jquery.min.js" ></script>
     <script src="/js/bootstrap.min.js"></script>
+    <style>
+
+        .center_div{
+            margin: 0 auto;
+            width:80% /* value of your choice which suits your alignment */
+        }
+    </style>
 </head>
 <body>
-
-<form role="form">
+<div class="container center_div">
+    Create Appointment
+<form >
 
     <div class="form-group">
 
@@ -48,7 +56,7 @@
     </button>
 
 </form>
-
+</div>
 
 </body>
 </html>
