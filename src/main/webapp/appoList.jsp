@@ -24,13 +24,14 @@
     </tr>
     </thead>
     <tbody>
+
     <c:forEach var="appointment"  items="${appointments}" >
         <tr>
             <td>${appointment.appointmentId}</td>
             <td>${appointment.timeslot.startTime}-${appointment.timeslot.endTime}</td>
             <td>${appointment.firstName} ${appointment.lastName}</td>
             <td>${appointment.state}</td>
-            
+
         </tr>
     </c:forEach>
 
