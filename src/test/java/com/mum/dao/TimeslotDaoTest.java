@@ -14,7 +14,7 @@ public class TimeslotDaoTest {
     ITimeslotDao dao = null;
 
     public TimeslotDaoTest() {
-        dao = new TimeslotDao();
+        dao = DataAccess.createTimeslotDao();
     }
 
     @Test

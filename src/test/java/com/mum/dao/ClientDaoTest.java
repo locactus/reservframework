@@ -9,10 +9,14 @@ import java.sql.SQLException;
 import static org.junit.Assert.*;
 
 public class ClientDaoTest {
+    IClientDao dao = null;
+
+    public ClientDaoTest() {
+        dao = DataAccess.createClientDao();
+    }
 
     @Test
     public void getClientByClientId() {
-        IClientDao dao = new ClientDao();
         Client client = null;
         try {
             client = dao.getClientByClientId(2001);

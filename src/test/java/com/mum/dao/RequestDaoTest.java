@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 public class RequestDaoTest {
     IRequestDao dao = null;
     public RequestDaoTest() {
-        dao = new RequestDao();
+        dao = DataAccess.createRequestDao();
     }
 
     @Test
