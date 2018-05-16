@@ -1,5 +1,6 @@
 package com.mum.dao;
 
+import com.mum.dao.mysql.ClientDao;
 import com.mum.model.Client;
 import org.junit.Test;
 
@@ -11,7 +12,7 @@ public class ClientDaoTest {
 
     @Test
     public void getClientByClientId() {
-        ClientDao dao = new ClientDao();
+        IClientDao dao = new ClientDao();
         Client client = null;
         try {
             client = dao.getClientByClientId(2001);

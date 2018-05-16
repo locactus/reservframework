@@ -1,11 +1,12 @@
 package com.mum.servlets;
 
-import com.mum.dao.ClientDao;
-import com.mum.dao.StaffDao;
+import com.mum.dao.mysql.ClientDao;
+import com.mum.dao.mysql.StaffDao;
 import com.mum.model.Client;
 import com.mum.model.Staff;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,8 +26,15 @@ public class UserServlet extends HttpServlet {
     if("login".equals(action)) {
       //user page is redirected, staff page is redirected to reserveList.jsp
       String username = req.getParameter("username");
-      Staff staffByUserName = staffDao.getStaffByUserName(username);
-      Client clientByFirstname = clientDao.getClientByFirstname(username);
+      Staff staffByUserName = null;
+      Client clientByFirstname = null;
+      try {
+        staffByUserName = staffDao.getStaffByUserName(username);
+        clientByFirstname = clientDao.getClientByFirstname(username);
+
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
       if(staffByUserName != null) {
         resp.sendRedirect(req.getContextPath() + "/reserveList.jsp");
       } else if(clientByFirstname != null){

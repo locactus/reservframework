@@ -1,5 +1,6 @@
 package com.mum.dao;
 
+import com.mum.dao.mysql.AppointmentDao;
 import com.mum.model.Appointment;
 import org.junit.Test;
 
@@ -9,7 +10,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class AppointmentDaoTest {
-    AppointmentDao dao = null;
+    IAppointmentDao dao = null;
 
     public AppointmentDaoTest() {
         dao = new AppointmentDao();
