@@ -2,14 +2,53 @@ package com.mum.dao.mysql;
 
 import com.mum.dao.IClientDao;
 import com.mum.datasource.DataSource;
+import com.mum.model.Appointment;
 import com.mum.model.Client;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClientDao extends BaseDao implements IClientDao {
+
+
+    @Override
+    public List<Client> getAll() throws SQLException {
+        List<Client> result = null;
+
+        String sql = "select * from client ";
+        conn = DataSource.getInstance().getConnection();
+        Statement pstmt = super.conn.createStatement();
+        ResultSet rset = pstmt.executeQuery(sql);
+        int numcols = rset.getMetaData().getColumnCount();
+
+        if (!rset.isBeforeFirst()) {
+            // Empty table
+            return null;
+        }
+
+        result = new ArrayList<>();
+
+        while (rset.next()) {
+            int clientId = rset.getInt("clientId");
+            String firstName = rset.getString("firstName");
+            String lastName = rset.getString("lastName");
+            String phoneNumber = rset.getString("phoneNumber");
+            String email = rset.getString("email");
+
+
+            Client client = new Client();
+            client.setClientId(clientId);
+            client.setFirstName(firstName);
+            client.setLastName(lastName);
+            client.setPhoneNumber(phoneNumber);
+            client.setEmail(email);
+
+            result.add(client);
+        }
+        conn.close();
+        return result;
+    }
 
     @Override
     public Client getClientByClientId(int clientId) throws SQLException {
