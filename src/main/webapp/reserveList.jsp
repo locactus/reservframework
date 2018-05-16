@@ -20,16 +20,19 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
-        <td>1</td>
-        <td>8:00-12:00</td>
-        <td>xiaoxiao</td>
-        <td>pending</td>
-        <td>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Reserve
-            </button>
-        </td>
-    </tr>
+
+    <c:forEach var="appointment"  items="${appointments}" >
+        <tr>
+            <td>${appointment.appointmentId}</td>
+            <td>${appointment.timeslot.startTime}-${appointment.timeslot.endTime}</td>
+            <td>${appointment.firstName} ${appointment.lastName}</td>
+            <td>${appointment.state}</td>
+            <td>
+                <button type="button" onlcick="approvel()" class="btn btn-default" data-dismiss="modal">Approvel
+                </button>
+            </td>
+        </tr>
+    </c:forEach>
 
     </tbody>
 </table>
