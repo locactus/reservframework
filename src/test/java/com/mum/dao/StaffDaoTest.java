@@ -9,6 +9,11 @@ import java.sql.SQLException;
 import static org.junit.Assert.*;
 
 public class StaffDaoTest {
+    IStaffDao dao = null;
+
+    public StaffDaoTest() {
+        dao = DataAccess.createStaffDao();
+    }
 
     @Test
     public void getStaffByStaffId() {

@@ -13,8 +13,10 @@ public class AppointmentDaoTest {
     IAppointmentDao dao = null;
 
     public AppointmentDaoTest() {
-        dao = new AppointmentDao();
+//        dao = new AppointmentDao();
+        dao = DataAccess.createAppointmentDao();
     }
+
 
     @Test
     public void insert() {
