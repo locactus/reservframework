@@ -1,5 +1,6 @@
 package com.mum.dao;
 
+import com.mum.dao.mysql.TimeslotDao;
 import com.mum.model.Timeslot;
 import org.junit.Test;
 
@@ -10,7 +11,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class TimeslotDaoTest {
-    TimeslotDao dao = null;
+    ITimeslotDao dao = null;
 
     public TimeslotDaoTest() {
         dao = new TimeslotDao();

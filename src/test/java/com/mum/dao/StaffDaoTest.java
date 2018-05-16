@@ -1,5 +1,6 @@
 package com.mum.dao;
 
+import com.mum.dao.mysql.StaffDao;
 import com.mum.model.Staff;
 import org.junit.Test;
 
@@ -11,7 +12,7 @@ public class StaffDaoTest {
 
     @Test
     public void getStaffByStaffId() {
-        StaffDao dao = new StaffDao();
+        IStaffDao dao = new StaffDao();
         Staff staff = null;
         try {
             staff = dao.getStaffByStaffId(1001);

@@ -1,20 +1,17 @@
-package com.mum.dao;
+package com.mum.dao.mysql;
 
+import com.mum.dao.IAppointmentDao;
 import com.mum.datasource.DataSource;
 import com.mum.model.Appointment;
-import com.mum.model.Request;
-import com.mum.model.enums.RequestState;
-import com.mum.model.enums.RequestType;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-public class AppointmentDao extends BaseDao {
+public class AppointmentDao  extends BaseDao implements IAppointmentDao {
 
     private List<Appointment> _get(String sql) throws SQLException{
         List<Appointment> result = null;
@@ -47,10 +44,12 @@ public class AppointmentDao extends BaseDao {
         return result;
     }
 
+    @Override
     public List<Appointment> getAll() throws SQLException {
         return this._get("SELECT * FROM appointment");
     }
 
+    @Override
     public int insert(Appointment apotment) throws SQLException {
         conn = DataSource.getInstance().getConnection();
         String sql = "INSERT INTO appointment(timeslotId, clientId) VALUES(?, ?)";
@@ -67,6 +66,7 @@ public class AppointmentDao extends BaseDao {
         return apotmentId;
     }
 
+    @Override
     public boolean delete(int apotmentId) throws SQLException  {
         conn = DataSource.getInstance().getConnection();
         String sql = "DELETE FROM request WHERE appointmentId = ? ";
@@ -78,10 +78,12 @@ public class AppointmentDao extends BaseDao {
         return true;
     }
 
+    @Override
     public List<Appointment> getAppointmentByClientId(int clientId) throws SQLException {
         return this._get("SELECT * FROM appointment WHERE clientId = " + clientId);
     }
 
+    @Override
     public Appointment getAppointmentById(int apotmentId) throws SQLException {
         List<Appointment> result = this._get("SELECT * FROM appointment WHERE appointmentId = " + apotmentId);
         if (result.isEmpty()) {
