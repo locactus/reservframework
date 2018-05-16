@@ -11,9 +11,9 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class RequestDaoTest {
-    RequestDao dao = null;
-    public RequestDaoTest() {
-        dao = new RequestDao();
+    IRequestDao dao = null;
+    public RequestDaoTest() throws IllegalAccessException, InstantiationException, ClassNotFoundException {
+        dao = DataAccessFactory.createRequestDao();
     }
 
     @Test
