@@ -1,5 +1,6 @@
-package com.mum.dao;
+package com.mum.dao.mysql;
 
+import com.mum.dao.ITimeslotDao;
 import com.mum.datasource.DataSource;
 import com.mum.model.Timeslot;
 
@@ -8,8 +9,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class TimeslotDao extends BaseDao {
+public class TimeslotDao extends BaseDao implements ITimeslotDao {
 
+    @Override
     public List<Timeslot> getAll() throws SQLException {
         List<Timeslot> result = null;
         super.conn = DataSource.getInstance().getConnection();
@@ -41,6 +43,7 @@ public class TimeslotDao extends BaseDao {
         return result;
     }
 
+    @Override
     public int insert(Timeslot timeslot) throws SQLException {
         conn = DataSource.getInstance().getConnection();
         String sql = "INSERT INTO timeslot(starttime, endtime) VALUES(?, ?)";
@@ -56,7 +59,7 @@ public class TimeslotDao extends BaseDao {
         return timeslotId;
     }
 
-
+    @Override
     public boolean delete(int timeslotId) throws SQLException {
         conn = DataSource.getInstance().getConnection();
         String sql = "DELETE FROM timeslot WHERE timeslotId = ? ";
