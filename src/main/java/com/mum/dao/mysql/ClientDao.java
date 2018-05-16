@@ -2,7 +2,6 @@ package com.mum.dao.mysql;
 
 import com.mum.dao.IClientDao;
 import com.mum.datasource.DataSource;
-import com.mum.model.Appointment;
 import com.mum.model.Client;
 
 import java.sql.*;
@@ -22,7 +21,7 @@ public class ClientDao extends BaseDao implements IClientDao {
         ResultSet rset = pstmt.executeQuery(sql);
         int numcols = rset.getMetaData().getColumnCount();
 
-        if (!rset.isBeforeFirst()) {
+            if (!rset.isBeforeFirst()) {
             // Empty table
             return null;
         }

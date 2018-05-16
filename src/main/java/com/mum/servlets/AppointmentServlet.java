@@ -1,10 +1,6 @@
 package com.mum.servlets;
 
-import com.mum.dao.mysql.AppointmentDao;
-import com.mum.dao.mysql.ClientDao;
-import com.mum.dao.mysql.RequestDao;
-import com.mum.dao.mysql.StaffDao;
-import com.mum.dao.mysql.TimeslotDao;
+import com.mum.dao.mysql.*;
 import com.mum.dto.AppointmentDTO;
 import com.mum.model.Appointment;
 import com.mum.model.Client;
@@ -12,16 +8,17 @@ import com.mum.model.Request;
 import com.mum.model.Timeslot;
 import com.mum.model.enums.RequestState;
 
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @WebServlet(urlPatterns = "/appointment")
 public class AppointmentServlet extends HttpServlet {
@@ -33,14 +30,30 @@ public class AppointmentServlet extends HttpServlet {
   private TimeslotDao timeslotDao = new TimeslotDao();
 
   @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    String action = req.getParameter("action");
-    if(action.equals("add")) {
-      addAppointment(req, resp);
-    } else if(action.equals("listOfUser")) {
-      listAllAppointment(req, resp);
-    } else if(action.equals("confirm")) {
-      confirmAppointment(req, resp);
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
+    try {
+      String action = req.getParameter("action");
+      if (action.equals("add")) {
+        addAppointment(req, resp);
+      } else if (action.equals("listOfUser")) {
+        listAllAppointment(req, resp);
+      } else if (action.equals("confirm")) {
+        confirmAppointment(req, resp);
+      } else if (action.equals("toaddtimeslot")) {
+        req.getRequestDispatcher(req.getContextPath() + "/createTimeslot.jsp").forward(req, resp);
+      } else if (action.equals("addtimeslot")) {
+        addTimeSlot(req, resp);
+        resp.sendRedirect(req.getContextPath() + "/appointment/list");
+      } else if (action.equals("toaddAppo")) {
+        List<Timeslot> timeslotList = timeslotDao.getAll();
+        List<Client> clientList = clientDao.getAll();
+        req.setAttribute("timeslotList", timeslotList);
+        req.getRequestDispatcher(req.getContextPath() + "/createAppo.jsp").forward(req, resp);
+      } else if (action.equals("addAppo")) {
+
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
     }
   }
 
@@ -109,6 +122,25 @@ public class AppointmentServlet extends HttpServlet {
   private void addAppointment(HttpServletRequest req, HttpServletResponse resp) {
 
   }
+  private void addTimeSlot(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException, ParseException {
+    String startDate = req.getParameter("startDate");
+    String endDate = req.getParameter("endDate");
+    Timeslot timeslot = new Timeslot();
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    timeslot.setStartTime(sdf.parse(startDate));
+    timeslot.setEndTime(sdf.parse(endDate));
+    timeslotDao.insert(timeslot);
+  }
+
+  private void addAppo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException, ParseException {
+    String clientId = req.getParameter("clientId");
+    String timeslotId = req.getParameter("timeslotId");
+    Appointment appointment = new Appointment();
+    appointment.setClientId(Integer.valueOf(clientId));
+    appointment.setTimeslotId(Integer.valueOf(timeslotId));
+    appointmentDao.insert(appointment);
+  }
+
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
