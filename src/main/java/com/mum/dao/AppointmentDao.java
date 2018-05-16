@@ -63,6 +63,7 @@ public class AppointmentDao extends BaseDao {
         keys.next();
         int apotmentId = keys.getInt(1);
         conn.close();
+        System.out.println("new apotmentId = " + apotmentId);
         return apotmentId;
     }
 
@@ -82,7 +83,7 @@ public class AppointmentDao extends BaseDao {
     }
 
     public Appointment getAppointmentById(int apotmentId) throws SQLException {
-        List<Appointment> result = this._get("SELECT * FROM appointment WHERE apointmentId = " + apotmentId);
+        List<Appointment> result = this._get("SELECT * FROM appointment WHERE appointmentId = " + apotmentId);
         if (result.isEmpty()) {
             return null;
         }

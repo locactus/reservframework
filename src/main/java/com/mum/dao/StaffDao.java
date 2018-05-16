@@ -1,13 +1,16 @@
 package com.mum.dao;
 
+import com.mum.datasource.DataSource;
 import com.mum.model.Staff;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class StaffDao extends BaseDao {
     public Staff getStaffByStaffId(int staffId) throws SQLException {
+        conn = DataSource.getInstance().getConnection();
         Staff staff = null;
         String sql = "SELECT * FROM staff WHERE staffId = ?";
         PreparedStatement pstmt = conn.prepareStatement(sql);

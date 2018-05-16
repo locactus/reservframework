@@ -48,8 +48,10 @@ public class TimeslotDao extends BaseDao {
         conn = DataSource.getInstance().getConnection();
         String sql = "INSERT INTO timeslot(starttime, endtime) VALUES(?, ?)";
         PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-        pstmt.setDate(1, (java.sql.Date) timeslot.getStartTime());
-        pstmt.setDate(2, (java.sql.Date) timeslot.getEndTime());
+//        pstmt.setDate(1, (java.sql.Date) timeslot.getStartTime());
+        pstmt.setDate(1, new java.sql.Date(timeslot.getStartTime().getTime()));
+//        pstmt.setDate(2, (java.sql.Date) timeslot.getEndTime());
+        pstmt.setDate(2, new java.sql.Date(timeslot.getEndTime().getTime()));
         System.out.println(pstmt);
         pstmt.executeUpdate();
         ResultSet keys = pstmt.getGeneratedKeys();

@@ -3,6 +3,8 @@ package com.mum.dao;
 import com.mum.model.Client;
 import org.junit.Test;
 
+import java.sql.SQLException;
+
 import static org.junit.Assert.*;
 
 public class ClientDaoTest {
@@ -10,7 +12,12 @@ public class ClientDaoTest {
     @Test
     public void getClientByClientId() {
         ClientDao dao = new ClientDao();
-        Client client = dao.getClientByClientId("2001");
+        Client client = null;
+        try {
+            client = dao.getClientByClientId(2001);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         assertTrue(client.getFirstName().equals("Eleven"));
     }
 }
