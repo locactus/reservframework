@@ -39,7 +39,7 @@ public class UserServlet extends HttpServlet {
         resp.sendRedirect(req.getContextPath() + "/appointment?action=list");
       } else if(clientByFirstname != null){
 //        resp.sendRedirect(req.getContextPath() + "/appoList.jsp");
-        resp.sendRedirect(req.getContextPath() + "/appointment?action=listOfUser");
+        resp.sendRedirect(req.getContextPath() + "/appointment?action=listofUser");
       }
     }
   }

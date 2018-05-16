@@ -139,12 +139,23 @@ public class AppointmentServlet extends HttpServlet {
    * @param resp
    */
   private void addAppointment(HttpServletRequest req, HttpServletResponse resp) {
-    String[] timeslotStrs = req.getParameterValues("timeslotStr");
     String firstName = req.getParameter("firstName");
     String lastName = req.getParameter("lastName");
     String phoneNumber = req.getParameter("phoneNumber");
     String email = req.getParameter("email");
     Client client = null;
+    String startDate = req.getParameter("startDate");
+    String endDate = req.getParameter("endDate");
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    Timeslot timeslot = null;
+    try {
+      timeslot = new Timeslot(sdf.parse(startDate), sdf.parse(endDate));
+      timeslotDao.insert(timeslot);
+    } catch (ParseException e) {
+      e.printStackTrace();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
     try {
       Client clientByFirstname = clientDao.getClientByFirstname(firstName);
       if(clientByFirstname != null) {
@@ -154,8 +165,6 @@ public class AppointmentServlet extends HttpServlet {
         clientDao.addClient(temp);
         client = temp;
       }
-      Timeslot timeslot = new Timeslot(new Date(timeslotStrs[0]), new Date(timeslotStrs[1]));
-      timeslotDao.insert(timeslot);
 
       Appointment appointment = new Appointment(timeslot.getTimeslotId(), client.getClientId());
       appointmentDao.insert(appointment);
