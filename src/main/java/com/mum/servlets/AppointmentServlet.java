@@ -99,8 +99,14 @@ public class AppointmentServlet extends HttpServlet {
     return appointmentDTO;
   }
 
+  /**
+   * 1. Create a Client
+   * 2. Create an Appointment
+   * 3. Create a Request(Status : PENDING)
+   * @param req
+   * @param resp
+   */
   private void addAppointment(HttpServletRequest req, HttpServletResponse resp) {
-
 
   }
 
