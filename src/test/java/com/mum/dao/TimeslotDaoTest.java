@@ -1,6 +1,5 @@
 package com.mum.dao;
 
-import com.mum.dao.mysql.TimeslotDao;
 import com.mum.model.Timeslot;
 import org.junit.Test;
 
@@ -13,8 +12,8 @@ import static org.junit.Assert.*;
 public class TimeslotDaoTest {
     ITimeslotDao dao = null;
 
-    public TimeslotDaoTest() {
-        dao = DataAccess.createTimeslotDao();
+    public TimeslotDaoTest() throws IllegalAccessException, InstantiationException, ClassNotFoundException {
+        dao = DataAccessFactory.createTimeslotDao();
     }
 
     @Test

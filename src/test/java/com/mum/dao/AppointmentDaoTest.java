@@ -1,6 +1,5 @@
 package com.mum.dao;
 
-import com.mum.dao.mysql.AppointmentDao;
 import com.mum.model.Appointment;
 import org.junit.Test;
 
@@ -12,9 +11,9 @@ import static org.junit.Assert.*;
 public class AppointmentDaoTest {
     IAppointmentDao dao = null;
 
-    public AppointmentDaoTest() {
+    public AppointmentDaoTest() throws IllegalAccessException, InstantiationException, ClassNotFoundException {
 //        dao = new AppointmentDao();
-        dao = DataAccess.createAppointmentDao();
+        dao = DataAccessFactory.createAppointmentDao();
     }
 
 

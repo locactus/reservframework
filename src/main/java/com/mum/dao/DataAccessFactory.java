@@ -1,76 +1,55 @@
 package com.mum.dao;
 
-
-public class DataAccess {
+//Simple-Factory to create the db dao instance
+public class DataAccessFactory {
 
     // switch db type
     private static final String db = "mysql";
     // private static final String db = "h2";
 
-    public static IAppointmentDao createAppointmentDao() {
-        IAppointmentDao dao = null;
-        switch (db) {
-            case "mysql":
-                dao = new com.mum.dao.mysql.AppointmentDao();
-                break;
-            case "h2":
-                dao = new com.mum.dao.h2.AppointmentDao();
-                break;
-        }
+    public static IAppointmentDao createAppointmentDao() throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+//        IAppointmentDao dao = null;
+//        switch (db) {
+//            case "mysql":
+//                dao = new com.mum.dao.mysql.AppointmentDao();
+//                break;
+//            case "h2":
+//                dao = new com.mum.dao.h2.AppointmentDao();
+//                break;
+//        }
+        // use reflection
+        String fullName = String.format("com.mum.dao.%s.AppointmentDao", db);
+        System.out.println(fullName);
+        IAppointmentDao dao = (IAppointmentDao)Class.forName(fullName).newInstance();
+
         return dao;
     }
 
-    public static IClientDao createClientDao() {
-        IClientDao dao = null;
-        switch (db) {
-            case "mysql":
-                dao = new com.mum.dao.mysql.ClientDao();
-                break;
-            case "h2":
-                dao = new com.mum.dao.h2.ClientDao();
-                break;
-        }
+    public static IClientDao createClientDao() throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+        String fullName = String.format("com.mum.dao.%s.ClientDao", db);
+        System.out.println(fullName);
+        IClientDao dao = (IClientDao)Class.forName(fullName).newInstance();
         return dao;
     }
 
-    public static IRequestDao createRequestDao() {
-        IRequestDao dao = null;
-        switch (db) {
-            case "mysql":
-                dao = new com.mum.dao.mysql.RequestDao();
-                break;
-            case "h2":
-                dao = new com.mum.dao.h2.RequestDao();
-                break;
-        }
+    public static IRequestDao createRequestDao() throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+        String fullName = String.format("com.mum.dao.%s.RequestDao", db);
+        System.out.println(fullName);
+        IRequestDao dao = (IRequestDao)Class.forName(fullName).newInstance();
         return dao;
     }
 
-    public static IStaffDao createStaffDao() {
-        IStaffDao dao = null;
-        switch (db) {
-            case "mysql":
-                dao = new com.mum.dao.mysql.StaffDao();
-                break;
-            case "h2":
-                dao = new com.mum.dao.h2.StaffDao();
-                break;
-        }
+    public static IStaffDao createStaffDao() throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+        String fullName = String.format("com.mum.dao.%s.StaffDao", db);
+        System.out.println(fullName);
+        IStaffDao dao = (IStaffDao)Class.forName(fullName).newInstance();
         return dao;
     }
 
-    public static ITimeslotDao createTimeslotDao() {
-        ITimeslotDao dao = null;
-        switch (db) {
-            case "mysql":
-                dao = new com.mum.dao.mysql.TimeslotDao();
-                break;
-            case "h2":
-                dao = new com.mum.dao.h2.TimeslotDao();
-                break;
-        }
+    public static ITimeslotDao createTimeslotDao()  throws ClassNotFoundException, IllegalAccessException, InstantiationException{
+        String fullName = String.format("com.mum.dao.%s.TimeslotDao", db);
+        System.out.println(fullName);
+        ITimeslotDao dao = (ITimeslotDao)Class.forName(fullName).newInstance();
         return dao;
     }
-
-
 }
