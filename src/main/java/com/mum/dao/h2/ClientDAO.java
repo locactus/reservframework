@@ -8,11 +8,6 @@ import java.util.List;
 public class ClientDAO extends BaseDAO implements IClientDAO {
 
     @Override
-    public List<Client> getAll() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
     public Client getClientByClientId(int clientId) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
