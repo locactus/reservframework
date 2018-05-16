@@ -4,55 +4,58 @@
 <html lang="en">
 <head>
     <link href="css/bootstrap.min.css" rel="stylesheet" >
+    <link href="https://cdn.bootcss.com/bootstrap-select/1.12.1/css/bootstrap-select.min.css" rel="stylesheet">
     <script src="/js/jquery.min.js" ></script>
     <script src="/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-select/1.12.1/js/bootstrap-select.min.js"></script>
     <style>
 
         .center_div{
             margin: 0 auto;
-            width:80% /* value of your choice which suits your alignment */
+            width:60% /* value of your choice which suits your alignment */
         }
     </style>
 </head>
 <body>
 <div class="container center_div">
     Create Appointment
-<form >
-
+<form action="${pageContext.request.contextPath}/appointment" type="post" >
+<input type="hidden" value="add" name="action" />
     <div class="form-group">
 
-        <label for="name" >Time slot</label>
+        <label class="col-lg-1 control-label">Time slot:</label>
 
-        <select id="example-multiple" multiple="multiple">
-            <option value="cheese">8:00-9:00</option>
-            <option value="tomatoes">8:00-9:00</option>
-            <option value="mozarella">8:00-9:00</option>
-            <option value="mushrooms">8:00-9:00</option>
-            <option value="pepperoni">8:00-9:00</option>
-            <option value="onions">8:00-9:00</option>
+        <select  class="selectpicker show-menu-arrow form-control" name="timeslotStr" multiple>
+
+            <c:forEach var="timeslot"  items="${timeslotList}" >
+                <option value="${timeslot.timeslotId}"><c:out value="${timeslot.startTime} - ${timeslot.endTime}" /></option>
+            </c:forEach>
         </select>
-        </br>
-
 
     </div>
 
     <div class="form-group">
-
-        <label for="user" >contact User</label>
-
-
-        <select id="example-radio">
-            <option value="cheese">Cheese</option>
-            <option value="tomatoes">Tomatoes</option>
-            <option value="mozarella">Mozzarella</option>
-            <option value="mushrooms">Mushrooms</option>
-            <option value="pepperoni">Pepperoni</option>
-            <option value="onions">Onions</option>
-        </select>
-        </br>
+        <label >First Name</label>
+        <input type="text" class="form-control" name="firstName"  >
     </div>
 
-    <button type="button" class="btn btn-default" data-dismiss="modal">Submit
+    <div class="form-group">
+        <label >Last Name</label>
+        <input type="text" class="form-control" name="lastName"  >
+    </div>
+
+    <div class="form-group">
+        <label >Phone Number</label>
+        <input type="text" class="form-control" name="phoneNumber"  >
+    </div>
+
+    <div class="form-group">
+        <label >Email</label>
+        <input type="text" class="form-control" name="email"  >
+    </div>
+
+
+    <button type="submit" class="btn btn-default" data-dismiss="modal">Submit
     </button>
 
 </form>
