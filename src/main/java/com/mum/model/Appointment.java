@@ -5,6 +5,16 @@ public class Appointment {
     private int timeslotId;
     private int clientId;
 
+    public Appointment(int appointmentId, int timeslotId, int clientId) {
+        this.appointmentId = appointmentId;
+        this.timeslotId = timeslotId;
+        this.clientId = clientId;
+    }
+
+    public Appointment() {
+
+    }
+
     public int getAppointmentId() {
         return appointmentId;
     }

@@ -28,9 +28,10 @@ public class UserServlet extends HttpServlet {
       Staff staffByUserName = staffDao.getStaffByUserName(username);
       Client clientByFirstname = clientDao.getClientByFirstname(username);
       if(staffByUserName != null) {
-        resp.sendRedirect(req.getContextPath() + "/reserveList.jsp");
+        resp.sendRedirect(req.getContextPath() + "/appointment?action=list");
       } else if(clientByFirstname != null){
-        resp.sendRedirect(req.getContextPath() + "/appoList.jsp");
+//        resp.sendRedirect(req.getContextPath() + "/appoList.jsp");
+        resp.sendRedirect(req.getContextPath() + "/appointment?action=listOfUser");
       }
     }
   }

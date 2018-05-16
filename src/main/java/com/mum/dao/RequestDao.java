@@ -55,8 +55,10 @@ public class RequestDao extends BaseDao {
         return this._get("SELECT * FROM request");
     }
 
+    //Get the latest request object
     public List<Request> getRequestsByAppointmentId(int apotmentId) throws SQLException {
-        return this._get("SELECT * FROM request WHERE appointmentId = " + apotmentId);
+        return this._get(String.format("SELECT * FROM request WHERE appointmentId = %d order by datetimeCreated desc " +
+                "limit 1", apotmentId));
     }
 
 
