@@ -4,12 +4,33 @@ import com.mum.dao.ITimeslotDao;
 import com.mum.datasource.DataSource;
 import com.mum.model.Timeslot;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class TimeslotDao extends BaseDao implements ITimeslotDao {
+
+    public Timeslot getByTimeslotId(int timeslotId) throws SQLException{
+        super.conn = DataSource.getInstance().getConnection();
+        String sql = "SELECT * FROM timeslot where timeslotId = (?)";
+        PreparedStatement pstmt = super.conn.prepareStatement(sql);
+        pstmt.setInt(1, timeslotId);
+        ResultSet rset = pstmt.executeQuery();
+
+        Date startTime = new Date(rset.getTimestamp("starttime").getTime());
+        Date endTime = new Date(rset.getTimestamp("endtime").getTime());
+
+        Timeslot timeslot = new Timeslot();
+        timeslot.setTimeslotId(timeslotId);
+        timeslot.setStartTime(startTime);
+        timeslot.setEndTime(endTime);
+        return timeslot;
+    }
 
     @Override
     public List<Timeslot> getAll() throws SQLException {
