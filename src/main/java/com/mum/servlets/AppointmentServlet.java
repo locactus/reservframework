@@ -120,7 +120,13 @@ public class AppointmentServlet extends HttpServlet {
    * @param resp
    */
   private void addAppointment(HttpServletRequest req, HttpServletResponse resp) {
+    String[] timeslotStrs = req.getParameterValues("timeslotStr");
+    String firstName = req.getParameter("firstName");
+    String lastName = req.getParameter("lastName");
+    String phoneNumber = req.getParameter("phoneNumber");
+    String email = req.getParameter("email");
 
+    Client client = new Client(firstName, lastName, phoneNumber, email);
   }
   private void addTimeSlot(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException, ParseException {
     String startDate = req.getParameter("startDate");

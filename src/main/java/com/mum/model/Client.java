@@ -7,6 +7,16 @@ public class Client {
     private String phoneNumber;
     private String email;
 
+    public Client(String firstName, String lastName, String phoneNumber, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+    }
+
+    public Client() {
+    }
+
     public int getClientId() {
         return clientId;
     }
