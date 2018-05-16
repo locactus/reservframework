@@ -20,20 +20,18 @@
         <th>timeslot</th>
         <th>contact User</th>
         <th>state</th>
-        <th>Operator</th>
+
     </tr>
     </thead>
     <tbody>
+
     <c:forEach var="appointment"  items="${appointments}" >
         <tr>
             <td>${appointment.appointmentId}</td>
             <td>${appointment.timeslot.startTime}-${appointment.timeslot.endTime}</td>
             <td>${appointment.firstName} ${appointment.lastName}</td>
             <td>${appointment.state}</td>
-            <td>
-                <button type="button" onlcick="approvel()" class="btn btn-default" data-dismiss="modal">Approvel
-                </button>
-            </td>
+
         </tr>
     </c:forEach>
 
