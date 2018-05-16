@@ -22,16 +22,17 @@
 
      -->
 
-    <form action="" class="form-horizontal">
+    <form action="${pageContext.request.contextPath}/appointment" class="form-horizontal" type="post" >
+        <input type="hidden" value="addtimeslot"  name="action" />
         <fieldset>
             <legend>Add time slot</legend>
 
             <!-- T1 时间精确到年月日时分秒：2017-07-13 02:25:07am-->
             <div class="control-group">
                 <label class="control-label">Start DateTime</label>
-                <div class="controls input-append date form_datetime" data-date="2017-07-16T05:25:07Z" data-date-format="mm/dd/yyyy HH:ii p" data-link-field="dtp_input1">
+                <div class="controls input-append date form_datetime" data-date="2017-07-16T05:25:07Z" data-date-format="yyyy-mm-dd hh:ii:00" data-link-field="dtp_input1">
 
-                    <input size="20" type="text" value="" readonly>
+                    <input size="20" type="text" value="" name="startDate" readonly>
                     <span class="add-on"><i class="icon-remove"></i></span>
                     <span class="add-on"><i class="icon-th"></i></span>
                 </div>
@@ -40,9 +41,9 @@
 
             <div class="control-group">
                 <label class="control-label">End DateTime</label>
-                <div class="controls input-append date form_datetime" data-date="2017-07-16T05:25:07Z" data-date-format="mm/dd/yyyy HH:ii p" data-link-field="dtp_input1">
+                <div class="controls input-append date form_datetime" data-date="2017-07-16T05:25:07Z" data-date-format="yyyy-mm-dd hh:ii:00" data-link-field="dtp_input1">
 
-                    <input size="20" type="text" value="" readonly>
+                    <input size="20" type="text" value="" name="endDate" readonly>
                     <span class="add-on"><i class="icon-remove"></i></span>
                     <span class="add-on"><i class="icon-th"></i></span>
                 </div>
@@ -50,7 +51,7 @@
             </div>
 
         </fieldset>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Save
+        <button type="submit" class="btn btn-default" data-dismiss="modal">Save
         </button>
     </form>
 </div>
