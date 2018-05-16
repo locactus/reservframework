@@ -31,9 +31,24 @@ public class AppointmentDaoTest {
     }
 
     @Test
+    public void select() {
+        try {
+            List<Appointment> appointmentByClientId = dao.getAppointmentByClientId(2001);
+            for (Appointment appointment : appointmentByClientId) {
+                System.out.println(appointment);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
     public void getAll() {
         try {
             List<Appointment> result = dao.getAll();
+            for (Appointment appointment : result) {
+                System.out.println(appointment);
+            }
             assertTrue(!result.isEmpty());
         } catch (SQLException e) {
             e.printStackTrace();
