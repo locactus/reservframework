@@ -3,10 +3,7 @@ package com.mum.dao;
 import com.mum.datasource.DataSource;
 import com.mum.model.Timeslot;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -48,10 +45,8 @@ public class TimeslotDao extends BaseDao {
         conn = DataSource.getInstance().getConnection();
         String sql = "INSERT INTO timeslot(starttime, endtime) VALUES(?, ?)";
         PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-//        pstmt.setDate(1, (java.sql.Date) timeslot.getStartTime());
-        pstmt.setDate(1, new java.sql.Date(timeslot.getStartTime().getTime()));
-//        pstmt.setDate(2, (java.sql.Date) timeslot.getEndTime());
-        pstmt.setDate(2, new java.sql.Date(timeslot.getEndTime().getTime()));
+        pstmt.setTimestamp(1,new Timestamp(timeslot.getStartTime().getTime()));
+        pstmt.setTimestamp(2, new Timestamp(timeslot.getEndTime().getTime()));
         System.out.println(pstmt);
         pstmt.executeUpdate();
         ResultSet keys = pstmt.getGeneratedKeys();
