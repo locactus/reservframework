@@ -1,6 +1,6 @@
 package com.mum.dao.mysql;
 
-import com.mum.dao.IAppointmentDao;
+import com.mum.dao.IAppointmentDAO;
 import com.mum.datasource.DataSource;
 import com.mum.model.Appointment;
 
@@ -11,7 +11,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AppointmentDao  extends BaseDao implements IAppointmentDao {
+public class AppointmentDAO extends BaseDAO implements IAppointmentDAO {
 
     private List<Appointment> _get(String sql) throws SQLException{
         List<Appointment> result = null;

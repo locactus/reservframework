@@ -1,6 +1,6 @@
 package com.mum.dao.mysql;
 
-import com.mum.dao.IRequestDao;
+import com.mum.dao.IRequestDAO;
 import com.mum.datasource.DataSource;
 import com.mum.model.Request;
 import com.mum.model.enums.RequestState;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class RequestDao extends BaseDao implements IRequestDao {
+public class RequestDAO extends BaseDAO implements IRequestDAO {
 
     private List<Request> _get(String sql) throws SQLException{
         List<Request> result = null;

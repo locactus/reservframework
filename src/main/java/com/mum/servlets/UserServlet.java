@@ -1,7 +1,7 @@
 package com.mum.servlets;
 
-import com.mum.dao.mysql.ClientDao;
-import com.mum.dao.mysql.StaffDao;
+import com.mum.dao.mysql.ClientDAO;
+import com.mum.dao.mysql.StaffDAO;
 import com.mum.model.Client;
 import com.mum.model.Staff;
 
@@ -17,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/user")
 public class UserServlet extends HttpServlet {
 
-  private StaffDao staffDao = new StaffDao();
-  private ClientDao clientDao = new ClientDao();
+  private StaffDAO staffDao = new StaffDAO();
+  private ClientDAO clientDao = new ClientDAO();
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

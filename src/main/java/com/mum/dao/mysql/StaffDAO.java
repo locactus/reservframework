@@ -1,6 +1,6 @@
 package com.mum.dao.mysql;
 
-import com.mum.dao.IStaffDao;
+import com.mum.dao.IStaffDAO;
 import com.mum.datasource.DataSource;
 import com.mum.model.Staff;
 
@@ -8,7 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class StaffDao extends BaseDao implements IStaffDao {
+public class StaffDAO extends BaseDAO implements IStaffDAO {
 
     @Override
     public Staff getStaffByStaffId(int staffId) throws SQLException {

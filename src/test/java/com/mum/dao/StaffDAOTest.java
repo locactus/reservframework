@@ -1,6 +1,6 @@
 package com.mum.dao;
 
-import com.mum.dao.mysql.StaffDao;
+import com.mum.dao.mysql.StaffDAO;
 import com.mum.model.Staff;
 import org.junit.Test;
 
@@ -8,16 +8,16 @@ import java.sql.SQLException;
 
 import static org.junit.Assert.*;
 
-public class StaffDaoTest {
-    IStaffDao dao = null;
+public class StaffDAOTest {
+    IStaffDAO dao = null;
 
-    public StaffDaoTest() throws IllegalAccessException, InstantiationException, ClassNotFoundException {
+    public StaffDAOTest() throws IllegalAccessException, InstantiationException, ClassNotFoundException {
         dao = DataAccessFactory.createStaffDao();
     }
 
     @Test
     public void getStaffByStaffId() {
-        IStaffDao dao = new StaffDao();
+        IStaffDAO dao = new StaffDAO();
         Staff staff = null;
         try {
             staff = dao.getStaffByStaffId(1001);
