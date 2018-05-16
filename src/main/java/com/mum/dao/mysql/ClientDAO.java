@@ -1,6 +1,6 @@
 package com.mum.dao.mysql;
 
-import com.mum.dao.IClientDao;
+import com.mum.dao.IClientDAO;
 import com.mum.datasource.DataSource;
 import com.mum.model.Client;
 
@@ -8,7 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClientDao extends BaseDao implements IClientDao {
+public class ClientDAO extends BaseDAO implements IClientDAO {
 
 
     @Override

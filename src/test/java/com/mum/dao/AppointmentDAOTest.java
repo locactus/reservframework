@@ -8,11 +8,11 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class AppointmentDaoTest {
-    IAppointmentDao dao = null;
+public class AppointmentDAOTest {
+    IAppointmentDAO dao = null;
 
-    public AppointmentDaoTest() throws IllegalAccessException, InstantiationException, ClassNotFoundException {
-//        dao = new AppointmentDao();
+    public AppointmentDAOTest() throws IllegalAccessException, InstantiationException, ClassNotFoundException {
+//        dao = new AppointmentDAO();
         dao = DataAccessFactory.createAppointmentDao();
     }
 

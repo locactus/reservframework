@@ -7,10 +7,10 @@ import java.sql.SQLException;
 
 import static org.junit.Assert.*;
 
-public class ClientDaoTest {
-    IClientDao dao = null;
+public class ClientDAOTest {
+    IClientDAO dao = null;
 
-    public ClientDaoTest() throws IllegalAccessException, InstantiationException, ClassNotFoundException {
+    public ClientDAOTest() throws IllegalAccessException, InstantiationException, ClassNotFoundException {
         dao = DataAccessFactory.createClientDao();
     }
 

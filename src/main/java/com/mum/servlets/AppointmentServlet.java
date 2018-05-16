@@ -1,10 +1,7 @@
 package com.mum.servlets;
 
-import com.mum.dao.mysql.AppointmentDao;
-import com.mum.dao.mysql.ClientDao;
-import com.mum.dao.mysql.RequestDao;
-import com.mum.dao.mysql.StaffDao;
-import com.mum.dao.mysql.TimeslotDao;
+
+import com.mum.dao.*;
 import com.mum.dto.AppointmentDTO;
 import com.mum.model.Appointment;
 import com.mum.model.Client;
@@ -26,11 +23,28 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(urlPatterns = "/appointment")
 public class AppointmentServlet extends HttpServlet {
 
-  private StaffDao staffDao = new StaffDao();
-  private ClientDao clientDao = new ClientDao();
-  private AppointmentDao appointmentDao = new AppointmentDao();
-  private RequestDao requestDao = new RequestDao();
-  private TimeslotDao timeslotDao = new TimeslotDao();
+  private IStaffDAO staffDao;
+  private IClientDAO clientDao;
+  private IRequestDAO requestDao;
+  private IAppointmentDAO appointmentDao;
+  private ITimeslotDAO timeslotDao;
+
+  {
+    try {
+      staffDao = DataAccessFactory.createStaffDao();
+      clientDao = DataAccessFactory.createClientDao();
+      requestDao = DataAccessFactory.createRequestDao();
+      appointmentDao = DataAccessFactory.createAppointmentDao();
+      timeslotDao = DataAccessFactory.createTimeslotDao();
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace();
+    } catch (IllegalAccessException e) {
+      e.printStackTrace();
+    } catch (InstantiationException e) {
+      e.printStackTrace();
+    }
+  }
+
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
