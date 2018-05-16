@@ -10,6 +10,7 @@
 
 
 <div class="container">
+
     <!--
     说明：
     1）data-date="2017-07-16T05:25:07Z"
@@ -20,6 +21,7 @@
                         可以根据个人爱好设置为 yyyy-mm-dd 等格式。
 
      -->
+
     <form action="" class="form-horizontal">
         <fieldset>
             <legend>Add time slot</legend>

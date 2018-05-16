@@ -8,6 +8,10 @@
     <script src="/js/bootstrap.min.js"></script>
 </head>
 <body>
+<button type="button" class="btn btn-default" data-dismiss="modal">Create TimeSlot
+</button>
+<button type="button" class="btn btn-default" data-dismiss="modal">Create Appo
+</button>
 <table class="table table-hover">
     <caption>appo List</caption>
     <thead>
