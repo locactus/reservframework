@@ -4,6 +4,6 @@ import com.mum.datasource.DataSource;
 
 import java.sql.Connection;
 
-public class BaseDao {
+public class BaseDAO {
     protected Connection conn = null;
 }

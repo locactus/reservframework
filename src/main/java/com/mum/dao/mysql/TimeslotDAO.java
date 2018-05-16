@@ -1,6 +1,6 @@
 package com.mum.dao.mysql;
 
-import com.mum.dao.ITimeslotDao;
+import com.mum.dao.ITimeslotDAO;
 import com.mum.datasource.DataSource;
 import com.mum.model.Timeslot;
 
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class TimeslotDao extends BaseDao implements ITimeslotDao {
+public class TimeslotDAO extends BaseDAO implements ITimeslotDAO {
 
     public Timeslot getByTimeslotId(int timeslotId) throws SQLException{
         super.conn = DataSource.getInstance().getConnection();
