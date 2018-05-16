@@ -1,6 +1,8 @@
 package com.mum.dao;
 
-//Simple-Factory to create the db dao instance
+/**
+ * Simple factory to create the dao instance based on the db type assigned.
+ */
 public class DataAccessFactory {
 
     // switch db type
