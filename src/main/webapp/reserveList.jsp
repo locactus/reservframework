@@ -30,26 +30,7 @@
             </button>
         </td>
     </tr>
-    <tr>
-        <td>2</td>
-        <td>8:00-12:00</td>
-        <td>xiaoxiao</td>
-        <td>reserved</td>
-        <td>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel
-            </button>
-        </td>
-    </tr>
-    <tr>
-        <td>3</td>
-        <td>8:00-12:00</td>
-        <td>xiaoxiao</td>
-        <td>open</td>
-        <td>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Reserve
-            </button>
-        </td>
-    </tr>
+
     </tbody>
 </table>
 

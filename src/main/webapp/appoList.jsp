@@ -8,9 +8,9 @@
     <script src="/js/bootstrap.min.js"></script>
 </head>
 <body>
-<button type="button" class="btn btn-default" data-dismiss="modal">Create TimeSlot
-</button>
-<button type="button" class="btn btn-default" data-dismiss="modal">Create Appo
+<%--<button type="button" class="btn btn-default" onclick="addTimeslot()" data-dismiss="modal">Create TimeSlot--%>
+<%--</button>--%>
+<button type="button" class="btn btn-default" onclick="addAppo()" data-dismiss="modal">Create Appo
 </button>
 <table class="table table-hover">
     <caption>appo List</caption>
@@ -24,38 +24,29 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
-        <td>1</td>
-        <td>8:00-12:00</td>
-        <td>xiaoxiao</td>
-        <td>pending</td>
-        <td>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Approvel
-            </button>
-        </td>
-    </tr>
-    <tr>
-        <td>2</td>
-        <td>8:00-12:00</td>
-        <td>xiaoxiao</td>
-        <td>reserved</td>
-        <td>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Approvel
-            </button>
-        </td>
-    </tr>
-    <tr>
-        <td>3</td>
-        <td>8:00-12:00</td>
-        <td>xiaoxiao</td>
-        <td>open</td>
-        <td>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Approvel
-            </button>
-        </td>
-    </tr>
+    <c:forEach var="appointment"  items="${appointments}" >
+        <tr>
+            <td>${appointment.appointmentId}</td>
+            <td>${appointment.timeslot.startTime}-${appointment.timeslot.endTime}</td>
+            <td>${appointment.firstName} ${appointment.lastName}</td>
+            <td>${appointment.state}</td>
+            <td>
+                <button type="button" onlcick="approvel()" class="btn btn-default" data-dismiss="modal">Approvel
+                </button>
+            </td>
+        </tr>
+    </c:forEach>
+
     </tbody>
 </table>
+<script>
+    function addAppo(){
+        window.location.href="${pageContext.request.contextPath}/appointment?action=toaddAppo";
+    }
+    function addTimeslot(){
+        window.location.href="${pageContext.request.contextPath}/appointment?action=toaddtimeslot";
+    }
 
+</script>
 </body>
 </html>

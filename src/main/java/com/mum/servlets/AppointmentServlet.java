@@ -52,7 +52,7 @@ public class AppointmentServlet extends HttpServlet {
       String action = req.getParameter("action");
       if (action.equals("add")) {
         addAppointment(req, resp);
-      } else if (action.equals("listOfUser")) {
+      } else if (action.equals("listofUser")) {
         listAllAppointment(req, resp);
       } else if (action.equals("confirm")) {
         confirmAppointment(req, resp);
