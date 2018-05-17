@@ -176,9 +176,11 @@ public class AppointmentServlet extends HttpServlet {
       Appointment appointment = new Appointment(byUuid.getTimeslotId(), byFirstname.getClientId());
 
       appointmentDao.insert(appointment);
+      Appointment appointment1 = appointmentDao.getAppointment(byFirstname.getClientId(), byUuid.getTimeslotId());
       Request request = new Request();
-      request.setAppointmentId(appointment.getAppointmentId());
+      request.setAppointmentId(appointment1.getAppointmentId());
       request.setType(RequestType.MAKE);
+      request.setState(RequestState.PENDING);
       request.setDatetimeCreated(new Date());
       requestDao.insert(request);
       resp.sendRedirect(req.getContextPath() + "/appointment?action=listofUser");

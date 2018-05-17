@@ -40,6 +40,8 @@ public class AppointmentDAO extends BaseDAO implements IAppointmentDAO {
 
             result.add(apotment);
         }
+        rset.close();
+        pstmt.close();
         conn.close();
         return result;
     }
@@ -86,6 +88,16 @@ public class AppointmentDAO extends BaseDAO implements IAppointmentDAO {
     @Override
     public Appointment getAppointmentById(int apotmentId) throws SQLException {
         List<Appointment> result = this._get("SELECT * FROM appointment WHERE appointmentId = " + apotmentId);
+        if (result.isEmpty()) {
+            return null;
+        }
+        return result.get(0);
+    }
+
+    @Override
+    public Appointment getAppointment(int clientId, int timeslotId) throws SQLException {
+        List<Appointment> result = this._get(String.format("SELECT * FROM appointment WHERE clientId=%s and " +
+            "timeslotId=%s", clientId, timeslotId));
         if (result.isEmpty()) {
             return null;
         }

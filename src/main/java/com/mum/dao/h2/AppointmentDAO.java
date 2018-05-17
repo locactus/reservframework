@@ -31,4 +31,9 @@ public class AppointmentDAO extends BaseDAO implements IAppointmentDAO {
     public Appointment getAppointmentById(int apotmentId) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    @Override
+    public Appointment getAppointment(int clientId, int timeslotId) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

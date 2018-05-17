@@ -98,12 +98,14 @@ public class ClientDAO extends BaseDAO implements IClientDAO {
         String lastName = rset.getString("lastname");
         String phoneNumber = rset.getString("phonenumber");
         String email = rset.getString("email");
+        int clientId = rset.getInt("clientId");
 
         client = new Client();
         client.setFirstName(firstname);
         client.setLastName(lastName);
         client.setPhoneNumber(phoneNumber);
         client.setEmail(email);
+        client.setClientId(clientId);
         return client;
     }
 
