@@ -1,6 +1,6 @@
 package com.mum.model;
 
-public class Client {
+public class Client extends Template{
     private int clientId;
     private String firstName;
     private String lastName;

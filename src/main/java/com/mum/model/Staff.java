@@ -1,6 +1,6 @@
 package com.mum.model;
 
-public class Staff {
+public class Staff extends Template {
     private int staffId;
     private String firstName;
     private String lastName;
