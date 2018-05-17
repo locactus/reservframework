@@ -1,6 +1,7 @@
 package com.mum.dao.mysql;
 
 import com.mum.dao.IRequestDAO;
+import com.mum.dao.IVisitor;
 import com.mum.datasource.DataSource;
 import com.mum.model.Request;
 import com.mum.model.enums.RequestState;
@@ -109,5 +110,15 @@ public class RequestDAO extends BaseDAO implements IRequestDAO {
         pstmt.close();
         conn.close();
         return true;
+    }
+
+    @Override
+    public void accept(IVisitor visitor) {
+        visitor.visitRequestDAO(this);
+    }
+
+    @Override
+    public String getLastExecutedStatement() {
+        return null;
     }
 }

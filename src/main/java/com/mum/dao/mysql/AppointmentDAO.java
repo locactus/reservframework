@@ -1,6 +1,7 @@
 package com.mum.dao.mysql;
 
 import com.mum.dao.IAppointmentDAO;
+import com.mum.dao.IVisitor;
 import com.mum.datasource.DataSource;
 import com.mum.model.Appointment;
 
@@ -107,5 +108,15 @@ public class AppointmentDAO extends BaseDAO implements IAppointmentDAO {
             return null;
         }
         return result.get(0);
+    }
+
+    @Override
+    public void accept(IVisitor visitor) {
+        visitor.visitAppointmentDAO(this);
+    }
+
+    @Override
+    public String getLastExecutedStatement() {
+        return null;
     }
 }

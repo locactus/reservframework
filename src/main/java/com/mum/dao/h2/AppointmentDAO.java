@@ -1,6 +1,7 @@
 package com.mum.dao.h2;
 
 import com.mum.dao.IAppointmentDAO;
+import com.mum.dao.IVisitor;
 import com.mum.model.Appointment;
 import java.sql.SQLException;
 import java.util.List;
@@ -35,5 +36,16 @@ public class AppointmentDAO extends BaseDAO implements IAppointmentDAO {
     @Override
     public Appointment getAppointment(int clientId, int timeslotId) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+
+    @Override
+    public void accept(IVisitor visitor) {
+
+    }
+
+    @Override
+    public String getLastExecutedStatement() {
+        return null;
     }
 }

@@ -5,7 +5,7 @@ import com.mum.model.Appointment;
 import java.sql.SQLException;
 import java.util.List;
 
-public interface IAppointmentDAO {
+public interface IAppointmentDAO extends IDAO {
 
     List<Appointment> getAll() throws SQLException;
     int insert(Appointment apotment) throws SQLException;

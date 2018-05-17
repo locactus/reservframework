@@ -1,6 +1,7 @@
 package com.mum.dao.mysql;
 
 import com.mum.dao.IClientDAO;
+import com.mum.dao.IVisitor;
 import com.mum.datasource.DataSource;
 import com.mum.model.Client;
 
@@ -15,9 +16,10 @@ public class ClientDAO extends BaseDAO implements IClientDAO {
     public List<Client> getAll() throws SQLException {
         List<Client> result = null;
 
-        String sql = "select * from client ";
+        String sql = "select * from client";
         conn = DataSource.getInstance().getConnection();
         Statement pstmt = super.conn.createStatement();
+        this.lastExecutedStatement = pstmt.toString();
         ResultSet rset = pstmt.executeQuery(sql);
         int numcols = rset.getMetaData().getColumnCount();
 
@@ -58,6 +60,7 @@ public class ClientDAO extends BaseDAO implements IClientDAO {
         super.conn = DataSource.getInstance().getConnection();
         PreparedStatement pstmt = super.conn.prepareStatement(sql);
         pstmt.setInt(1, clientId);
+        this.lastExecutedStatement = pstmt.toString();
         ResultSet rset = pstmt.executeQuery();
         int numcols = rset.getMetaData().getColumnCount();
 
@@ -165,5 +168,15 @@ public class ClientDAO extends BaseDAO implements IClientDAO {
         int clientId = keys.getInt(1);
         conn.close();
         return clientId;
+    }
+
+    @Override
+    public void accept(IVisitor visitor) {
+        visitor.visitClientDAO(this);
+    }
+
+    @Override
+    public String getLastExecutedStatement() {
+        return this.lastExecutedStatement;
     }
 }
