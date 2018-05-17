@@ -78,13 +78,21 @@ public class AppointmentServlet extends HttpServlet {
     }
   }
 
-  private void confirmAppointment(HttpServletRequest req, HttpServletResponse resp) {
-//    req.getParameter("")
+  private void confirmAppointment(HttpServletRequest req, HttpServletResponse resp) throws IOException, SQLException {
+
+    Request request = new Request();
+    request.setAppointmentId(Integer.valueOf(req.getParameter("appointmentId")));
+    request.setType(RequestType.MAKE);
+    request.setState(RequestState.ACCEPT);
+    request.setDatetimeCreated(new Date());
+    requestDao.insert(request);
+    resp.sendRedirect(req.getContextPath() + "/appointment?action=list");
+
   }
 
   private List<AppointmentDTO> getAll() throws SQLException {
       List<Appointment> allAppointment = appointmentDao.getAll();
-     return  allAppointment.stream()
+      return  allAppointment.stream()
               .map(apointment -> mapToDTO(apointment))
               .collect(Collectors.toList());
   }
@@ -96,7 +104,7 @@ public class AppointmentServlet extends HttpServlet {
 
   private void listAdminAppointment(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
     req.setAttribute("appointments", getAll());
-    req.getRequestDispatcher(req.getContextPath() + "/reserveList.jsp.jsp").forward(req, resp);
+    req.getRequestDispatcher(req.getContextPath() + "/reserveList.jsp").forward(req, resp);
   }
 
 

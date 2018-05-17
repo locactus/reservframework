@@ -28,14 +28,21 @@
             <td>${appointment.firstName} ${appointment.lastName}</td>
             <td>${appointment.state}</td>
             <td>
-                <button type="button" onlcick="approvel()" class="btn btn-default" data-dismiss="modal">Approvel
-                </button>
+                <c:if test="${appointment.state eq 'PENDING'}">
+                    <button type="button" onclick="approvel('${appointment.appointmentId}')" class="btn btn-default" data-dismiss="modal">Approvel
+                    </button>
+                </c:if>
             </td>
         </tr>
     </c:forEach>
 
     </tbody>
 </table>
+<script>
 
+    function approvel(appointmentId){
+        window.location.href="${pageContext.request.contextPath}/appointment?action=confirm&appointmentId="+appointmentId;
+    }
+</script>
 </body>
 </html>
