@@ -117,11 +117,6 @@ public class ClientDAO extends BaseDAO implements IClientDAO {
     }
 
     @Override
-    public int insert(Client client) throws SQLException {
-        return 0;
-    }
-
-    @Override
     public boolean addClient(Client client) {
         Connection conn = DataSource.getInstance().getConnection();
         String sql = "insert into client(firstname, lastname, phonenumber, email) values(?, ?, ?, ?)";
@@ -155,20 +150,20 @@ public class ClientDAO extends BaseDAO implements IClientDAO {
 
     }
 
-    // public int insert(Client client) throws SQLException {
-    //     conn = DataSource.getInstance().getConnection();
-    //     String sql = "INSERT INTO client(firstname, lastname, phonenumber, email) VALUES(?, ?, ?, ?)";
-    //     PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-    //     pstmt.setString(1, client.getFirstName());
-    //     pstmt.setString(2, client.getLastName());
-    //     pstmt.setString(3, client.getPhoneNumber());
-    //     pstmt.setString(4, client.getEmail());
-    //     System.out.println(pstmt);
-    //     pstmt.executeUpdate();
-    //     ResultSet keys = pstmt.getGeneratedKeys();
-    //     keys.next();
-    //     int clientId = keys.getInt(1);
-    //     conn.close();
-    //     return clientId;
-    // }
+    public int insert(Client client) throws SQLException {
+        conn = DataSource.getInstance().getConnection();
+        String sql = "INSERT INTO client(firstname, lastname, phonenumber, email) VALUES(?, ?, ?, ?)";
+        PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        pstmt.setString(1, client.getFirstName());
+        pstmt.setString(2, client.getLastName());
+        pstmt.setString(3, client.getPhoneNumber());
+        pstmt.setString(4, client.getEmail());
+        System.out.println(pstmt);
+        pstmt.executeUpdate();
+        ResultSet keys = pstmt.getGeneratedKeys();
+        keys.next();
+        int clientId = keys.getInt(1);
+        conn.close();
+        return clientId;
+    }
 }
