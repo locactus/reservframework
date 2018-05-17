@@ -8,6 +8,8 @@ import com.mum.model.Request;
 import com.mum.model.Timeslot;
 import com.mum.model.enums.RequestState;
 import com.mum.model.enums.RequestType;
+import com.mum.service.MakeRequestCommand;
+import com.mum.service.RequestCommand;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -187,14 +189,12 @@ public class AppointmentServlet extends HttpServlet {
       Client byFirstname = clientDao.getClientByFirstname(firstName);
       Appointment appointment = new Appointment(tl.getTimeslotId(), byFirstname.getClientId());
 
-      appointmentDao.insert(appointment);
-      Appointment appointment1 = appointmentDao.getAppointment(byFirstname.getClientId(), tl.getTimeslotId());
-      Request request = new Request();
-      request.setAppointmentId(appointment1.getAppointmentId());
-      request.setType(RequestType.MAKE);
-      request.setState(RequestState.PENDING);
-      request.setDatetimeCreated(new Date());
-      requestDao.insert(request);
+      int apointmentId = appointmentDao.insert(appointment);
+
+      RequestCommand cmd = new MakeRequestCommand(appointmentDao.getAppointmentById(apointmentId));
+      cmd.setWorker(requestDao);
+      cmd.execute();
+
       resp.sendRedirect(req.getContextPath() + "/appointment?action=listofUser");
     } catch (SQLException e) {
       e.printStackTrace();
