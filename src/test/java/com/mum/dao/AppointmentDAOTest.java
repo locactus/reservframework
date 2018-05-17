@@ -98,8 +98,13 @@ public class AppointmentDAOTest {
     @Test
     public void getAppointmentByAppointmentId() {
         try {
-            Appointment appointmentById = dao.getAppointmentById(4004);
-            System.out.println(appointmentById);
+            Appointment apotment = new Appointment();
+            apotment.setClientId(2001);
+            apotment.setTimeslotId(3001);
+            int appointmentId = dao.insert(apotment);
+            Appointment appointment = dao.getAppointmentById(appointmentId);
+            System.out.println(appointment);
+            dao.delete(appointmentId);
         } catch (SQLException e) {
             e.printStackTrace();
         }
