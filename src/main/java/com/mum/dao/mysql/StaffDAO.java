@@ -1,6 +1,7 @@
 package com.mum.dao.mysql;
 
 import com.mum.dao.IStaffDAO;
+import com.mum.dao.IVisitor;
 import com.mum.datasource.DataSource;
 import com.mum.model.Staff;
 
@@ -73,5 +74,15 @@ public class StaffDAO extends BaseDAO implements IStaffDAO {
         pstmt.close();
         conn.close();
         return staff;
+    }
+
+    @Override
+    public void accept(IVisitor visitor) {
+        visitor.visitStaffDAO(this);
+    }
+
+    @Override
+    public String getLastExecutedStatement() {
+        return null;
     }
 }

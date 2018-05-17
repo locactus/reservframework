@@ -1,6 +1,7 @@
 package com.mum.dao.mysql;
 
 import com.mum.dao.ITimeslotDAO;
+import com.mum.dao.IVisitor;
 import com.mum.datasource.DataSource;
 import com.mum.model.Timeslot;
 
@@ -121,5 +122,15 @@ public class TimeslotDAO extends BaseDAO implements ITimeslotDAO {
         pstmt.close();
         conn.close();
         return true;
+    }
+
+    @Override
+    public void accept(IVisitor visitor) {
+        visitor.visitTimeslotDAO(this);
+    }
+
+    @Override
+    public String getLastExecutedStatement() {
+        return null;
     }
 }
