@@ -1,5 +1,7 @@
-package com.mum.dao;
+package com.mum.dao.mysql;
 
+import com.mum.dao.DataAccessFactory;
+import com.mum.dao.IAppointmentDAO;
 import com.mum.model.Appointment;
 import org.junit.Test;
 
