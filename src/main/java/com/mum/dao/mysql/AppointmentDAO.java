@@ -53,6 +53,8 @@ public class AppointmentDAO extends BaseDAO implements IAppointmentDAO {
 
     @Override
     public int insert(Appointment apotment) throws SQLException {
+        int appointmentId = apotment.getAppointmentId();
+        int clientId = apotment.getClientId();
         conn = DataSource.getInstance().getConnection();
         String sql = "INSERT INTO appointment(timeslotId, clientId) VALUES(?, ?)";
         PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -63,6 +65,8 @@ public class AppointmentDAO extends BaseDAO implements IAppointmentDAO {
         ResultSet keys = pstmt.getGeneratedKeys();
         keys.next();
         int apotmentId = keys.getInt(1);
+        keys.close();
+        pstmt.close();
         conn.close();
         System.out.println("new apotmentId = " + apotmentId);
         return apotmentId;
@@ -76,6 +80,7 @@ public class AppointmentDAO extends BaseDAO implements IAppointmentDAO {
         pstmt.setInt(1, apotmentId);
         System.out.println(pstmt);
         pstmt.executeUpdate();
+        pstmt.close();
         conn.close();
         return true;
     }

@@ -47,6 +47,8 @@ public class RequestDAO extends BaseDAO implements IRequestDAO {
 
             result.add(request);
         }
+        rset.close();
+        pstmt.close();
         conn.close();
         return result;
     }
@@ -76,6 +78,8 @@ public class RequestDAO extends BaseDAO implements IRequestDAO {
         ResultSet keys = pstmt.getGeneratedKeys();
         keys.next();
         int requestId = keys.getInt(1);
+        keys.close();
+        pstmt.close();
         conn.close();
         return requestId;
     }
@@ -88,6 +92,7 @@ public class RequestDAO extends BaseDAO implements IRequestDAO {
         pstmt.setInt(1, requestId);
         System.out.println(pstmt);
         pstmt.executeUpdate();
+        pstmt.close();
         conn.close();
         return true;
     }
@@ -101,6 +106,7 @@ public class RequestDAO extends BaseDAO implements IRequestDAO {
         pstmt.setInt(2, request.getType().ordinal());
         System.out.println(pstmt);
         pstmt.executeUpdate();
+        pstmt.close();
         conn.close();
         return true;
     }

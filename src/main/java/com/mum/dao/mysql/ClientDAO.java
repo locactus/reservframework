@@ -45,6 +45,8 @@ public class ClientDAO extends BaseDAO implements IClientDAO {
 
             result.add(client);
         }
+        rset.close();
+        pstmt.close();
         conn.close();
         return result;
     }
@@ -75,6 +77,8 @@ public class ClientDAO extends BaseDAO implements IClientDAO {
         client.setLastName(lastName);
         client.setPhoneNumber(phoneNumber);
         client.setEmail(email);
+        rset.close();
+        pstmt.close();
         super.conn.close();
         return client;
     }
@@ -106,6 +110,9 @@ public class ClientDAO extends BaseDAO implements IClientDAO {
         client.setPhoneNumber(phoneNumber);
         client.setEmail(email);
         client.setClientId(clientId);
+        rset.close();
+        pstmt.close();
+        conn.close();
         return client;
     }
 
@@ -130,6 +137,12 @@ public class ClientDAO extends BaseDAO implements IClientDAO {
 
         try {
             return pstmt.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            pstmt.close();
+            conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

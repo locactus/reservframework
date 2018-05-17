@@ -30,6 +30,9 @@ public class TimeslotDAO extends BaseDAO implements ITimeslotDAO {
             timeslot.setStartTime(startTime);
             timeslot.setEndTime(endTime);
         }
+        rset.close();
+        pstmt.close();
+        conn.close();
         return timeslot;
     }
 
@@ -49,6 +52,9 @@ public class TimeslotDAO extends BaseDAO implements ITimeslotDAO {
             timeslot.setStartTime(startTime);
             timeslot.setEndTime(endTime);
         }
+        rset.close();
+        pstmt.close();
+        conn.close();
         return timeslot;
     }
 
@@ -80,7 +86,9 @@ public class TimeslotDAO extends BaseDAO implements ITimeslotDAO {
 
             result.add(timeslot);
         }
-
+        rset.close();
+        pstmt.close();
+        conn.close();
         return result;
     }
 
@@ -96,6 +104,8 @@ public class TimeslotDAO extends BaseDAO implements ITimeslotDAO {
         ResultSet keys = pstmt.getGeneratedKeys();
         keys.next();
         int timeslotId = keys.getInt(1);
+        keys.close();
+        pstmt.close();
         conn.close();
         return timeslotId;
     }
@@ -108,6 +118,7 @@ public class TimeslotDAO extends BaseDAO implements ITimeslotDAO {
         pstmt.setInt(1, timeslotId);
         System.out.println(pstmt);
         pstmt.executeUpdate();
+        pstmt.close();
         conn.close();
         return true;
     }

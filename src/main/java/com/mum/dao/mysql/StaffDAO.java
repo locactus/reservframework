@@ -37,6 +37,8 @@ public class StaffDAO extends BaseDAO implements IStaffDAO {
         staff.setLastName(lastName);
         staff.setPhoneNumber(phoneNumber);
         staff.setEmail(email);
+        rset.close();
+        pstmt.close();
         conn.close();
         return staff;
     }
@@ -67,6 +69,9 @@ public class StaffDAO extends BaseDAO implements IStaffDAO {
         staff.setLastName(lastName);
         staff.setPhoneNumber(phoneNumber);
         staff.setEmail(email);
+        pstmt.close();
+        pstmt.close();
+        conn.close();
         return staff;
     }
 }
