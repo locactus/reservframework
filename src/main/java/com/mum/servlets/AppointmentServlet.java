@@ -20,7 +20,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @WebServlet(urlPatterns = "/appointment")
@@ -57,6 +56,8 @@ public class AppointmentServlet extends HttpServlet {
         addAppointment(req, resp);
       } else if (action.equals("listofUser")) {
         listAllAppointment(req, resp);
+      }else if (action.equals("list")) {
+        listAdminAppointment(req, resp);
       } else if (action.equals("confirm")) {
         confirmAppointment(req, resp);
       } else if (action.equals("toaddtimeslot")) {
@@ -85,8 +86,8 @@ public class AppointmentServlet extends HttpServlet {
     try {
       List<Appointment> allAppointment = appointmentDao.getAll();
       List<AppointmentDTO> appointments = allAppointment.stream()
-          .map(apointment -> mapToDTO(apointment))
-          .collect(Collectors.toList());
+              .map(apointment -> mapToDTO(apointment))
+              .collect(Collectors.toList());
       req.setAttribute("appointments", appointments);
       req.getRequestDispatcher(req.getContextPath() + "/appoList.jsp").forward(req, resp);
     } catch (SQLException e) {
@@ -97,6 +98,25 @@ public class AppointmentServlet extends HttpServlet {
       e.printStackTrace();
     }
   }
+
+  private void listAdminAppointment(HttpServletRequest req, HttpServletResponse resp) {
+    try {
+      List<Appointment> allAppointment = appointmentDao.getAll();
+      List<AppointmentDTO> appointments = allAppointment.stream()
+              .map(apointment -> mapToDTO(apointment))
+              .collect(Collectors.toList());
+      req.setAttribute("appointments", appointments);
+      req.getRequestDispatcher(req.getContextPath() + "/reserveList.jsp").forward(req, resp);
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (ServletException e) {
+      e.printStackTrace();
+    }
+  }
+
+
 
   private AppointmentDTO mapToDTO(Appointment apointment) {
     AppointmentDTO appointmentDTO = new AppointmentDTO(apointment.getAppointmentId(), apointment.getTimeslotId(), apointment.getClientId());
