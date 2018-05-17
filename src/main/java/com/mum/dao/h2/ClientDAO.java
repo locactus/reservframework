@@ -18,6 +18,11 @@ public class ClientDAO extends BaseDAO implements IClientDAO {
     }
 
     @Override
+    public int insert(Client client) throws SQLException {
+        return 0;
+    }
+
+    @Override
     public List<Client> getAll() throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");
     }

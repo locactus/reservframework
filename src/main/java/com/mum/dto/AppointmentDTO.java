@@ -27,6 +27,9 @@ public class AppointmentDTO extends Appointment {
     super(appointmentId, timeslotId, clientId);
   }
 
+  public AppointmentDTO() {
+  }
+
   public Timeslot getTimeslot() {
     return timeslot;
   }
