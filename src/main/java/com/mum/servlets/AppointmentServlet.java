@@ -82,38 +82,21 @@ public class AppointmentServlet extends HttpServlet {
 //    req.getParameter("")
   }
 
-  private void listAllAppointment(HttpServletRequest req, HttpServletResponse resp) {
-    try {
+  private List<AppointmentDTO> getAll() throws SQLException {
       List<Appointment> allAppointment = appointmentDao.getAll();
-      List<AppointmentDTO> appointments = allAppointment.stream()
+     return  allAppointment.stream()
               .map(apointment -> mapToDTO(apointment))
               .collect(Collectors.toList());
-      req.setAttribute("appointments", appointments);
-      req.getRequestDispatcher(req.getContextPath() + "/appoList.jsp").forward(req, resp);
-    } catch (SQLException e) {
-      e.printStackTrace();
-    } catch (IOException e) {
-      e.printStackTrace();
-    } catch (ServletException e) {
-      e.printStackTrace();
-    }
   }
 
-  private void listAdminAppointment(HttpServletRequest req, HttpServletResponse resp) {
-    try {
-      List<Appointment> allAppointment = appointmentDao.getAll();
-      List<AppointmentDTO> appointments = allAppointment.stream()
-              .map(apointment -> mapToDTO(apointment))
-              .collect(Collectors.toList());
-      req.setAttribute("appointments", appointments);
-      req.getRequestDispatcher(req.getContextPath() + "/reserveList.jsp").forward(req, resp);
-    } catch (SQLException e) {
-      e.printStackTrace();
-    } catch (IOException e) {
-      e.printStackTrace();
-    } catch (ServletException e) {
-      e.printStackTrace();
-    }
+  private void listAllAppointment(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
+    req.setAttribute("appointments", getAll());
+    req.getRequestDispatcher(req.getContextPath() + "/appoList.jsp").forward(req, resp);
+  }
+
+  private void listAdminAppointment(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
+    req.setAttribute("appointments", getAll());
+    req.getRequestDispatcher(req.getContextPath() + "/reserveList.jsp.jsp").forward(req, resp);
   }
 
 
