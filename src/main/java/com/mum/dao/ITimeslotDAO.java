@@ -9,5 +9,5 @@ public interface ITimeslotDAO {
     int insert(Timeslot timeslot) throws SQLException ;
     boolean delete(int timeslotId) throws SQLException;
     Timeslot getByTimeslotId(int timeslotId) throws SQLException;
-    Timeslot getByUuid(String uuid) throws SQLException;
+    // Timeslot getByUuid(String uuid) throws SQLException;
 }

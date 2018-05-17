@@ -149,13 +149,13 @@ public class AppointmentServlet extends HttpServlet {
     String endDate = req.getParameter("endDate");
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     Timeslot timeslot = null;
-    String uuid = UUID.randomUUID().toString();
-
+    // String uuid = UUID.randomUUID().toString();
+    int timeslotId = -1;
     try {
       timeslot = new Timeslot(sdf.parse(startDate), sdf.parse(endDate));
 
-      timeslot.setUuid(uuid);
-      timeslotDao.insert(timeslot);
+      // timeslot.setUuid(uuid);
+      timeslotId = timeslotDao.insert(timeslot);
     } catch (ParseException e) {
       e.printStackTrace();
     } catch (SQLException e) {
@@ -171,12 +171,13 @@ public class AppointmentServlet extends HttpServlet {
         client = temp;
       }
 
-      Timeslot byUuid = timeslotDao.getByUuid(uuid);
+      // Timeslot tl = timeslotDao.getByUuid(uuid);
+      Timeslot tl = timeslotDao.getByTimeslotId(timeslotId);
       Client byFirstname = clientDao.getClientByFirstname(firstName);
-      Appointment appointment = new Appointment(byUuid.getTimeslotId(), byFirstname.getClientId());
+      Appointment appointment = new Appointment(tl.getTimeslotId(), byFirstname.getClientId());
 
       appointmentDao.insert(appointment);
-      Appointment appointment1 = appointmentDao.getAppointment(byFirstname.getClientId(), byUuid.getTimeslotId());
+      Appointment appointment1 = appointmentDao.getAppointment(byFirstname.getClientId(), tl.getTimeslotId());
       Request request = new Request();
       request.setAppointmentId(appointment1.getAppointmentId());
       request.setType(RequestType.MAKE);
