@@ -57,6 +57,14 @@ public class ClientDAO extends BaseDAO implements IClientDAO {
         pstmt.setInt(1, clientId);
         this.lastExecutedStatement = pstmt.toString();
         ResultSet rset = pstmt.executeQuery();
+
+        if (!rset.isBeforeFirst()) {
+            // Empty table
+            rset.close();
+            pstmt.close();
+            conn.close();
+            return null;
+        }
         rset.next();
         String firstName = rset.getString("firstname");
         String lastName = rset.getString("lastname");

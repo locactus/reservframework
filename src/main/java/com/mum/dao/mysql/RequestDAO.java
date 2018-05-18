@@ -46,8 +46,6 @@ public class RequestDAO extends BaseDAO implements IRequestDAO {
         rset.close();
         pstmt.close();
         conn.close();
-        System.out.println();
-        System.out.println();
         return result;
     }
 
