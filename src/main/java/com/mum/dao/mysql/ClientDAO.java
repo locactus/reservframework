@@ -20,7 +20,6 @@ public class ClientDAO extends BaseDAO implements IClientDAO {
         conn = DataSource.getInstance().getConnection();
         Statement pstmt = super.conn.createStatement();
         this.lastExecutedStatement = pstmt.toString();
-        System.out.println(pstmt);
         ResultSet rset = pstmt.executeQuery(sql);
 
         result = new ArrayList<>();
