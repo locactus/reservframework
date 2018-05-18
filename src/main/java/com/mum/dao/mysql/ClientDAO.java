@@ -22,7 +22,6 @@ public class ClientDAO extends BaseDAO implements IClientDAO {
         this.lastExecutedStatement = pstmt.toString();
         System.out.println(pstmt);
         ResultSet rset = pstmt.executeQuery(sql);
-        int numcols = rset.getMetaData().getColumnCount();
 
         result = new ArrayList<>();
 
@@ -58,12 +57,6 @@ public class ClientDAO extends BaseDAO implements IClientDAO {
         pstmt.setInt(1, clientId);
         this.lastExecutedStatement = pstmt.toString();
         ResultSet rset = pstmt.executeQuery();
-        int numcols = rset.getMetaData().getColumnCount();
-
-        // if (!rset.isBeforeFirst()) {
-        //     // Empty table
-        //     return null;
-        // }
         rset.next();
         String firstName = rset.getString("firstname");
         String lastName = rset.getString("lastname");
@@ -91,12 +84,6 @@ public class ClientDAO extends BaseDAO implements IClientDAO {
         pstmt.setString(1, firstname);
         System.out.println(pstmt);
         ResultSet rset = pstmt.executeQuery();
-        int numcols = rset.getMetaData().getColumnCount();
-
-        // if (!rset.isBeforeFirst()) {
-        //     // Empty table
-        //     return null;
-        // }
 
         rset.next();
         String lastName = rset.getString("lastname");

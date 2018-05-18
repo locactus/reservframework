@@ -21,25 +21,13 @@ public class RequestDAO extends BaseDAO implements IRequestDAO {
         List<Request> result = null;
 
         conn = DataSource.getInstance().getConnection();
-        System.out.println("----------------> got conn:");
 
         Statement pstmt = super.conn.createStatement();
         System.out.println(sql);
         ResultSet rset = pstmt.executeQuery(sql);
 
-        int numcols = rset.getMetaData().getColumnCount();
-        System.out.println("numcols: " + numcols);
-        // if (!rset.isBeforeFirst()) {
-        //     // Empty table
-        //     System.out.println("empty tale, return!");
-        //     return null;
-        // }
-
         result = new ArrayList<>();
-        int i = 1;
-        System.out.println("while ing:");
         while (rset.next()) {
-            System.out.println("while start:");
             int requestId = rset.getInt("requestId");
             RequestType type = RequestType.values()[rset.getInt("type")];
             RequestState state = RequestState.values()[rset.getInt("state")];
@@ -54,13 +42,10 @@ public class RequestDAO extends BaseDAO implements IRequestDAO {
             request.setDatetimeCreated(datetimeCreated);
 
             result.add(request);
-            System.out.println(i++);
-            System.out.println("while end!");
         }
         rset.close();
         pstmt.close();
         conn.close();
-        System.out.println("----------------> close conn!");
         System.out.println();
         System.out.println();
         return result;

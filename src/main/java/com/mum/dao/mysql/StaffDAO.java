@@ -19,12 +19,6 @@ public class StaffDAO extends BaseDAO implements IStaffDAO {
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setInt(1, staffId);
         ResultSet rset = pstmt.executeQuery();
-        int numcols = rset.getMetaData().getColumnCount();
-
-        if (!rset.isBeforeFirst()) {
-            // Empty table
-            return null;
-        }
 
         rset.next();
         String firstName = rset.getString("firstname");

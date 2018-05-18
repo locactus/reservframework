@@ -37,28 +37,6 @@ public class TimeslotDAO extends BaseDAO implements ITimeslotDAO {
         return timeslot;
     }
 
-    // public Timeslot getByUuid(String uuid) throws SQLException{
-    //     super.conn = DataSource.getInstance().getConnection();
-    //     String sql = "SELECT * FROM timeslot where uuid = (?)";
-    //     PreparedStatement pstmt = super.conn.prepareStatement(sql);
-    //     pstmt.setString(1, uuid);
-    //     ResultSet rset = pstmt.executeQuery();
-    //     Timeslot timeslot = new Timeslot();
-    //
-    //     while(rset.next()) {
-    //         Date startTime = new Date(rset.getTimestamp("starttime").getTime());
-    //         Date endTime = new Date(rset.getTimestamp("endtime").getTime());
-    //         timeslot.setUuid(uuid);
-    //         timeslot.setTimeslotId(rset.getInt("timeslotId"));
-    //         timeslot.setStartTime(startTime);
-    //         timeslot.setEndTime(endTime);
-    //     }
-    //     rset.close();
-    //     pstmt.close();
-    //     conn.close();
-    //     return timeslot;
-    // }
-
     @Override
     public List<Timeslot> getAll() throws SQLException {
         List<Timeslot> result = null;
@@ -66,12 +44,6 @@ public class TimeslotDAO extends BaseDAO implements ITimeslotDAO {
         String sql = "SELECT * FROM timeslot";
         PreparedStatement pstmt = super.conn.prepareStatement(sql);
         ResultSet rset = pstmt.executeQuery();
-        int numcols = rset.getMetaData().getColumnCount();
-
-        if (!rset.isBeforeFirst()) {
-            // Empty table
-            return null;
-        }
 
         result = new ArrayList<>();
 
