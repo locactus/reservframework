@@ -1,11 +1,15 @@
 package com.mum.model;
 
-public class Client extends Template{
+import com.mum.model.enums.UserType;
+import com.mum.pattern.flyweight.User;
+
+public class Client extends Template implements User {
     private int clientId;
     private String firstName;
     private String lastName;
     private String phoneNumber;
     private String email;
+    private UserType userType;
 
     public Client(String firstName, String lastName, String phoneNumber, String email) {
         this.firstName = firstName;
@@ -15,6 +19,10 @@ public class Client extends Template{
     }
 
     public Client() {
+    }
+
+    public Client(UserType userType) {
+        this.userType = userType;
     }
 
     public int getClientId() {

@@ -85,18 +85,20 @@ public class ClientDAO extends BaseDAO implements IClientDAO {
         System.out.println(pstmt);
         ResultSet rset = pstmt.executeQuery();
 
-        rset.next();
-        String lastName = rset.getString("lastname");
-        String phoneNumber = rset.getString("phonenumber");
-        String email = rset.getString("email");
-        int clientId = rset.getInt("clientId");
+        if(rset.next()) {
+            String lastName = rset.getString("lastname");
+            String phoneNumber = rset.getString("phonenumber");
+            String email = rset.getString("email");
+            int clientId = rset.getInt("clientId");
 
-        client = new Client();
-        client.setFirstName(firstname);
-        client.setLastName(lastName);
-        client.setPhoneNumber(phoneNumber);
-        client.setEmail(email);
-        client.setClientId(clientId);
+            client = new Client();
+            client.setFirstName(firstname);
+            client.setLastName(lastName);
+            client.setPhoneNumber(phoneNumber);
+            client.setEmail(email);
+            client.setClientId(clientId);
+        }
+
         rset.close();
         pstmt.close();
         conn.close();

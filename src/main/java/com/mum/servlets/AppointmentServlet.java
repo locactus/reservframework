@@ -11,6 +11,9 @@ import com.mum.model.Request;
 import com.mum.model.Timeslot;
 import com.mum.model.enums.RequestState;
 import com.mum.model.enums.RequestType;
+import com.mum.model.enums.UserType;
+import com.mum.pattern.flyweight.ClientFactory;
+import com.mum.pattern.flyweight.User;
 import com.mum.service.MakeRequestCommand;
 import com.mum.service.RequestCommand;
 
@@ -169,7 +172,6 @@ public class AppointmentServlet extends HttpServlet {
     String lastName = req.getParameter("lastName");
     String phoneNumber = req.getParameter("phoneNumber");
     String email = req.getParameter("email");
-    Client client = null;
     String startDate = req.getParameter("startDate");
     String endDate = req.getParameter("endDate");
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -189,11 +191,16 @@ public class AppointmentServlet extends HttpServlet {
     try {
       Client clientByFirstname = clientDao.getClientByFirstname(firstName);
       if(clientByFirstname != null) {
-        client = clientByFirstname;
       } else {
-        Client temp = new Client(firstName, lastName, phoneNumber, email);
-        clientDao.addClient(temp);
-        client = temp;
+//        Client temp = new Client(firstName, lastName, phoneNumber, email);
+        synchronized (this) {//
+          Client client = (Client)ClientFactory.getUser(UserType.CLIENT);
+          client.setFirstName(firstName);
+          client.setLastName(lastName);
+          client.setPhoneNumber(phoneNumber);
+          client.setEmail(email);
+          clientDao.addClient(client);
+        }
       }
 
       // Timeslot tl = timeslotDao.getByUuid(uuid);
