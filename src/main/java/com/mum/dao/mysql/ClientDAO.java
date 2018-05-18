@@ -20,6 +20,7 @@ public class ClientDAO extends BaseDAO implements IClientDAO {
         conn = DataSource.getInstance().getConnection();
         Statement pstmt = super.conn.createStatement();
         this.lastExecutedStatement = pstmt.toString();
+        System.out.println(pstmt);
         ResultSet rset = pstmt.executeQuery(sql);
 
         result = new ArrayList<>();
@@ -56,6 +57,15 @@ public class ClientDAO extends BaseDAO implements IClientDAO {
         pstmt.setInt(1, clientId);
         this.lastExecutedStatement = pstmt.toString();
         ResultSet rset = pstmt.executeQuery();
+        int numcols = rset.getMetaData().getColumnCount();
+
+        if (!rset.isBeforeFirst()) {
+            // Empty table
+            rset.close();
+            pstmt.close();
+            conn.close();
+            return null;
+        }
         rset.next();
         String firstName = rset.getString("firstname");
         String lastName = rset.getString("lastname");
