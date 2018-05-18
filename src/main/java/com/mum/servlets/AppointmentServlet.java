@@ -13,7 +13,6 @@ import com.mum.model.enums.RequestState;
 import com.mum.model.enums.RequestType;
 import com.mum.model.enums.UserType;
 import com.mum.pattern.flyweight.ClientFactory;
-import com.mum.pattern.flyweight.User;
 import com.mum.service.MakeRequestCommand;
 import com.mum.service.RequestCommand;
 
@@ -28,7 +27,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @WebServlet(urlPatterns = "/appointment")
