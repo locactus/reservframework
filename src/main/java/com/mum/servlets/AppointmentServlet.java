@@ -1,6 +1,11 @@
 package com.mum.servlets;
 
-import com.mum.dao.*;
+import com.mum.dao.DataAccessFactory;
+import com.mum.dao.IAppointmentDAO;
+import com.mum.dao.IClientDAO;
+import com.mum.dao.IRequestDAO;
+import com.mum.dao.IStaffDAO;
+import com.mum.dao.ITimeslotDAO;
 import com.mum.dto.AppointmentDTO;
 import com.mum.dto.AppointmentDTOBuilder;
 import com.mum.dto.BuildDirector;
@@ -13,25 +18,23 @@ import com.mum.model.enums.RequestState;
 import com.mum.model.enums.RequestType;
 import com.mum.model.enums.UserType;
 import com.mum.pattern.flyweight.ClientFactory;
-import com.mum.pattern.flyweight.User;
 import com.mum.pattern.iterator.IteratorRepository;
 import com.mum.service.MakeRequestCommand;
 import com.mum.service.RequestCommand;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 @WebServlet(urlPatterns = "/appointment")
 public class AppointmentServlet extends HttpServlet {
