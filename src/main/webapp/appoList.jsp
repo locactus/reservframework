@@ -25,6 +25,7 @@
     </thead>
     <tbody id="appendBody">
 
+
     <%--<c:forEach var="appointment"  items="${appointments}" >--%>
         <%--<tr>--%>
             <%--<td>${appointment.appointmentId}</td>--%>
@@ -37,7 +38,7 @@
 
     </tbody>
 </table>
-
+<img id="loading" src="img/Loading_icon.gif"/>
 <button type="button" class="btn btn-primary" onclick="addAppo()" data-dismiss="modal">New Appointment
 </button>
 <script>
@@ -59,8 +60,10 @@
     $(function(){
         //get list
         $.get(getRootPath() + '/appointment?action=getList').done(function (o) {
+            $("#loading").hide();
             let obj = JSON.parse(o);
             $.each(obj,function(index,e){
+
                 var tr = $("<tr>");
                 $("<td>").text(e.appointmentId).appendTo(tr);
                 $("<td>").text(e.startTimeStr+" -"+ e.endTimeStr)

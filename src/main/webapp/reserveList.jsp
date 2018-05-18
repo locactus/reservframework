@@ -11,7 +11,7 @@
 </head>
 <body>
 <table class="table table-hover" style="padding: 0px 100px">
-    <caption>Reverse</caption>
+    <caption></caption>
     <thead class="thead-dark" >
     <tr>
         <th scope="col">No.</th>
@@ -22,7 +22,6 @@
     </tr>
     </thead>
     <tbody id="appendBody" >
-
     <%--<c:forEach var="appointment"  items="${appointments}" >--%>
         <%--<tr>--%>
             <%--<td>${appointment.appointmentId}</td>--%>
@@ -40,6 +39,8 @@
 
     </tbody>
 </table>
+<img id="loading" src="img/Loading_icon.gif"/>
+
 <script>
     function getRootPath(){
         var curWwwPath=window.document.location.href;
@@ -57,8 +58,10 @@
     $(function(){
         //get list
         $.get(getRootPath() + '/appointment?action=getList').done(function (o) {
+            $("#loading").hide();
             let obj = JSON.parse(o);
             $.each(obj,function(index,e){
+
                 var tr = $("<tr>");
                 $("<td>").text(e.appointmentId).appendTo(tr);
                 $("<td>").text(e.startTimeStr+" -"+ e.endTimeStr)
