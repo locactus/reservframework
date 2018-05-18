@@ -27,7 +27,6 @@ public class RequestDAO extends BaseDAO implements IRequestDAO {
         ResultSet rset = pstmt.executeQuery(sql);
 
         result = new ArrayList<>();
-        int i = 1;
         while (rset.next()) {
             int requestId = rset.getInt("requestId");
             RequestType type = RequestType.values()[rset.getInt("type")];
@@ -43,13 +42,10 @@ public class RequestDAO extends BaseDAO implements IRequestDAO {
             request.setDatetimeCreated(datetimeCreated);
 
             result.add(request);
-            System.out.println(i++);
         }
         rset.close();
         pstmt.close();
         conn.close();
-        System.out.println();
-        System.out.println();
         return result;
     }
 

@@ -57,7 +57,6 @@ public class ClientDAO extends BaseDAO implements IClientDAO {
         pstmt.setInt(1, clientId);
         this.lastExecutedStatement = pstmt.toString();
         ResultSet rset = pstmt.executeQuery();
-        int numcols = rset.getMetaData().getColumnCount();
 
         if (!rset.isBeforeFirst()) {
             // Empty table
