@@ -23,6 +23,11 @@ public class RequestDAO extends BaseDAO implements IRequestDAO {
     }
 
     @Override
+    public Request getLatestRequestByAppointmentId(int appointmentId) throws SQLException {
+        return null;
+    }
+
+    @Override
     public int insert(Request request) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");
     }

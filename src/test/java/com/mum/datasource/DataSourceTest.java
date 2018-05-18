@@ -3,6 +3,7 @@ package com.mum.datasource;
 import org.junit.Test;
 
 import java.sql.*;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.*;
 
@@ -32,6 +33,18 @@ public class DataSourceTest {
             assertTrue(numcols > 0);
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void getInstanceTimes() throws Exception {
+        for (int i = 0; i < 100; i++) {
+            DataSource ds  = DataSource.getInstance();
+            Connection conn  = ds.getConnection();
+            // TimeUnit.SECONDS.sleep(1);
+            TimeUnit.MILLISECONDS.sleep(100);
+            ds.printDriverStats();
+            conn.close();
         }
     }
 

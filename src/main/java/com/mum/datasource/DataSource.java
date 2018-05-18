@@ -58,11 +58,17 @@ public class DataSource {
 
     public Connection getConnection() {
         try {
+            try {
+                this.printDriverStats();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             System.out.println("Creating connection.");
             conn = DriverManager.getConnection("jdbc:apache:commons:dbcp:framework");
         } catch(SQLException e) {
             e.printStackTrace();
         }
+        System.out.println("Done.");
         return conn;
     }
 
@@ -120,7 +126,7 @@ public class DataSource {
         PoolingDriver driver = (PoolingDriver) DriverManager.getDriver("jdbc:apache:commons:dbcp:");
         ObjectPool<? extends Connection> connectionPool = driver.getConnectionPool("framework");
 
-        System.out.println("NumActive: " + connectionPool.getNumActive());
+        System.out.println("NumActive: [" + connectionPool.getNumActive() + "]");
         System.out.println("NumIdle: " + connectionPool.getNumIdle());
     }
 

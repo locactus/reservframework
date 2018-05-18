@@ -1,5 +1,8 @@
 package com.mum.servlets;
 
+import com.mum.dao.DataAccessFactory;
+import com.mum.dao.IClientDAO;
+import com.mum.dao.IStaffDAO;
 import com.mum.dao.mysql.ClientDAO;
 import com.mum.dao.mysql.StaffDAO;
 import com.mum.model.Client;
@@ -17,8 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/user")
 public class UserServlet extends HttpServlet {
 
-  private StaffDAO staffDao = new StaffDAO();
-  private ClientDAO clientDao = new ClientDAO();
+
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -26,20 +28,45 @@ public class UserServlet extends HttpServlet {
     if("login".equals(action)) {
       //user page is redirected, staff page is redirected to reserveList.jsp
       String username = req.getParameter("username");
-      Staff staffByUserName = null;
-      Client clientByFirstname = null;
+      String usertype = req.getParameter("usertype");
+//       Staff staffByUserName = null;
+//       Client clientByFirstname = null;
+//       try {
+//         staffByUserName = staffDao.getStaffByUserName(username);
+//         clientByFirstname = clientDao.getClientByFirstname(username);
+//
+//       } catch (SQLException e) {
+//         e.printStackTrace();
+//       }
+//       if(staffByUserName != null) {
+//         resp.sendRedirect(req.getContextPath() + "/appointment?action=list");
+//       } else if(clientByFirstname != null){
+// //        resp.sendRedirect(req.getContextPath() + "/appoList.jsp");
+//         resp.sendRedirect(req.getContextPath() + "/appointment?action=listofUser");
+//       }
+//
       try {
-        staffByUserName = staffDao.getStaffByUserName(username);
-        clientByFirstname = clientDao.getClientByFirstname(username);
+        if (usertype.equals("staff")) {
+          Staff staff = DataAccessFactory.createStaffDao().getStaffByUserName(username);
+          if (staff != null) {
+            resp.sendRedirect(req.getContextPath() + "/appointment?action=list");
+            System.out.println("-> list page");
+          } else {
+            System.out.println("Return null!");
+          }
+        } else if (usertype.equals("client")) {
 
-      } catch (SQLException e) {
+          Client client = DataAccessFactory.createClientDao().getClientByFirstname(username);
+          if (client != null) {
+            resp.sendRedirect(req.getContextPath() + "/appointment?action=listofUser");
+            System.out.println("-> list of user page");
+          } else {
+            System.out.println("Return null!");
+          }
+        }
+
+      } catch (Exception e) {
         e.printStackTrace();
-      }
-      if(staffByUserName != null) {
-        resp.sendRedirect(req.getContextPath() + "/appointment?action=list");
-      } else if(clientByFirstname != null){
-//        resp.sendRedirect(req.getContextPath() + "/appoList.jsp");
-        resp.sendRedirect(req.getContextPath() + "/appointment?action=listofUser");
       }
     }
   }

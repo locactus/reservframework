@@ -23,6 +23,7 @@ public class AppointmentDTOBuilder implements IBuilder {
 
     @Override
     public void buildParts() {
+        System.out.println("==================== buildParts() start:");
         try {
             this.buildAppointment();
             this.buildTimeslot();
@@ -31,6 +32,7 @@ public class AppointmentDTOBuilder implements IBuilder {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println("==================== buildParts() end!");
     }
 
     private void buildAppointment() {
@@ -54,11 +56,14 @@ public class AppointmentDTOBuilder implements IBuilder {
 
     private void buildRequest() throws IllegalAccessException, InstantiationException, ClassNotFoundException, SQLException {
         IRequestDAO dao = DataAccessFactory.createRequestDao();
-        List<Request> requests = dao.getRequestsByAppointmentId(this.appointment.getAppointmentId());
-
-        if (!requests.isEmpty()) {
-            requests.sort(Comparator.comparing(Request::getDatetimeCreated));
-            Request request = requests.get(0);
+        // List<Request> requests = dao.getRequestsByAppointmentId(this.appointment.getAppointmentId());
+        // if (requests != null && !requests.isEmpty()) {
+        //     requests.sort(Comparator.comparing(Request::getDatetimeCreated));
+        //     Request request = requests.get(0);
+        //     appointmentDTO.setState(request.getState());
+        // }
+        Request request = dao.getLatestRequestByAppointmentId(this.appointment.getAppointmentId());
+        if (request != null) {
             appointmentDTO.setState(request.getState());
         }
     }

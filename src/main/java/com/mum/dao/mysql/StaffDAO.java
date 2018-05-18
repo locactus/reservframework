@@ -50,13 +50,8 @@ public class StaffDAO extends BaseDAO implements IStaffDAO {
         String sql = "SELECT * FROM staff WHERE userName = ?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setString(1, userName);
+        System.out.println(pstmt);
         ResultSet rset = pstmt.executeQuery();
-        int numcols = rset.getMetaData().getColumnCount();
-
-        if (!rset.isBeforeFirst()) {
-            // Empty table
-            return null;
-        }
 
         rset.next();
         String firstName = rset.getString("firstname");

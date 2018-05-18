@@ -7,6 +7,7 @@ import java.util.List;
 public interface IRequestDAO extends IDAO {
     List<Request> getAll() throws SQLException;
     List<Request> getRequestsByAppointmentId(int apotmentId) throws SQLException;
+    Request getLatestRequestByAppointmentId(int appointmentId) throws SQLException;
     int insert(Request request) throws SQLException;
     boolean delete(int requestId) throws SQLException;
     boolean update(Request request) throws SQLException;
