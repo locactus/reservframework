@@ -1,11 +1,7 @@
 package com.mum.servlets;
 
-import com.mum.dao.DataAccessFactory;
-import com.mum.dao.IAppointmentDAO;
-import com.mum.dao.IClientDAO;
-import com.mum.dao.IRequestDAO;
-import com.mum.dao.IStaffDAO;
-import com.mum.dao.ITimeslotDAO;
+import com.google.gson.Gson;
+import com.mum.dao.*;
 import com.mum.dto.AppointmentDTO;
 import com.mum.dto.AppointmentDTOBuilder;
 import com.mum.dto.BuildDirector;
@@ -22,6 +18,11 @@ import com.mum.pattern.iterator.IteratorRepository;
 import com.mum.service.MakeRequestCommand;
 import com.mum.service.RequestCommand;
 
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -29,12 +30,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(urlPatterns = "/appointment")
 public class AppointmentServlet extends HttpServlet {
@@ -84,8 +79,8 @@ public class AppointmentServlet extends HttpServlet {
         List<Client> clientList = clientDao.getAll();
         req.setAttribute("timeslotList", timeslotList);
         req.getRequestDispatcher(req.getContextPath() + "/createAppo.jsp").forward(req, resp);
-      } else if (action.equals("addAppo")) {
-
+      } else if (action.equals("getList")) {
+        this.getList(req,resp);
       }
     } catch (Exception e) {
       e.printStackTrace();
@@ -127,15 +122,21 @@ public class AppointmentServlet extends HttpServlet {
   }
 
   private void listAllAppointment(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
-    req.setAttribute("appointments", getAll());
     req.getRequestDispatcher(req.getContextPath() + "/appoList.jsp").forward(req, resp);
   }
 
   private void listAdminAppointment(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
-    req.setAttribute("appointments", getAll());
     req.getRequestDispatcher(req.getContextPath() + "/reserveList.jsp").forward(req, resp);
   }
 
+  private void getList(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException {
+    List<AppointmentDTO> list = this.getAll();
+    Gson gson = new Gson();
+    String json = gson.toJson(list);
+    System.out.println(json);
+    resp.getWriter().print(json);
+    resp.flushBuffer();
+  }
 
 
   private AppointmentDTO mapToDTO(Appointment apointment) {

@@ -23,17 +23,17 @@
         <th scope="col">State</th>
     </tr>
     </thead>
-    <tbody>
+    <tbody id="appendBody">
 
-    <c:forEach var="appointment"  items="${appointments}" >
-        <tr>
-            <td>${appointment.appointmentId}</td>
-            <td><fmt:formatDate value="${appointment.timeslot.startTime}" pattern="EEE MMM d yyyy, HH:mm"/> - <fmt:formatDate value="${appointment.timeslot.endTime}" pattern="HH:mm"/></td>
-            <td>${appointment.firstName} ${appointment.lastName}</td>
-            <td>${appointment.state}</td>
+    <%--<c:forEach var="appointment"  items="${appointments}" >--%>
+        <%--<tr>--%>
+            <%--<td>${appointment.appointmentId}</td>--%>
+            <%--<td><fmt:formatDate value="${appointment.timeslot.startTime}" pattern="EEE MMM d yyyy, HH:mm"/> - <fmt:formatDate value="${appointment.timeslot.endTime}" pattern="HH:mm"/></td>--%>
+            <%--<td>${appointment.firstName} ${appointment.lastName}</td>--%>
+            <%--<td>${appointment.state}</td>--%>
 
-        </tr>
-    </c:forEach>
+        <%--</tr>--%>
+    <%--</c:forEach>--%>
 
     </tbody>
 </table>
@@ -41,12 +41,38 @@
 <button type="button" class="btn btn-primary" onclick="addAppo()" data-dismiss="modal">New Appointment
 </button>
 <script>
+    function getRootPath(){
+        var curWwwPath=window.document.location.href;
+        var pathName=window.document.location.pathname;
+        var pos=curWwwPath.indexOf(pathName);
+        var localhostPaht=curWwwPath.substring(0,pos);
+        var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);
+        return(localhostPaht+projectName);
+    }
+
     function addAppo(){
         window.location.href="${pageContext.request.contextPath}/appointment?action=toaddAppo";
     }
     function addTimeslot(){
         window.location.href="${pageContext.request.contextPath}/appointment?action=toaddtimeslot";
     }
+    $(function(){
+        //get list
+        $.get(getRootPath() + '/appointment?action=getList').done(function (o) {
+            let obj = JSON.parse(o);
+            $.each(obj,function(index,e){
+                var tr = $("<tr>");
+                $("<td>").text(e.appointmentId).appendTo(tr);
+                $("<td>").text(e.startTimeStr+" -"+ e.endTimeStr)
+                        .appendTo(tr);
+                $("<td>").text(e.firstName+" "+ e.lastName)
+                        .appendTo(tr);
+                $("<td>").text(e.state)
+                        .appendTo(tr);
+                tr.appendTo($("#appendBody"));
+            });
+        });
+    });
 
 </script>
 </body>

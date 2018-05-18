@@ -12,6 +12,9 @@ public class AppointmentDTO extends Appointment {
   private String email;
   private RequestState state;
 
+  private String startTimeStr;
+  private String endTimeStr;
+
   public AppointmentDTO(int appointmentId, int timeslotId, int clientId, Timeslot timeslot, String firstName, String
       lastName, String phoneNumber, String email, RequestState state) {
     super(appointmentId, timeslotId, clientId);
@@ -76,5 +79,21 @@ public class AppointmentDTO extends Appointment {
 
   public void setState(RequestState state) {
     this.state = state;
+  }
+
+  public String getStartTimeStr() {
+    return startTimeStr;
+  }
+
+  public void setStartTimeStr(String startTimeStr) {
+    this.startTimeStr = startTimeStr;
+  }
+
+  public String getEndTimeStr() {
+    return endTimeStr;
+  }
+
+  public void setEndTimeStr(String endTimeStr) {
+    this.endTimeStr = endTimeStr;
   }
 }

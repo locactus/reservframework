@@ -21,30 +21,61 @@
         <th scope="col">Process</th>
     </tr>
     </thead>
-    <tbody>
+    <tbody id="appendBody" >
 
-    <c:forEach var="appointment"  items="${appointments}" >
-        <tr>
-            <td>${appointment.appointmentId}</td>
-            <td><fmt:formatDate value="${appointment.timeslot.startTime}" pattern="EEE MMM d yyyy, HH:mm"/> - <fmt:formatDate value="${appointment.timeslot.endTime}" pattern="HH:mm"/></td>
-            <td>${appointment.firstName} ${appointment.lastName}</td>
-            <td>${appointment.state}</td>
-            <td>
-                <c:if test="${appointment.state eq 'PENDING'}">
-                    <button type="button" onclick="approvel('${appointment.appointmentId}')" class="btn btn-danger" data-dismiss="modal">Approvel
-                    </button>
-                </c:if>
-            </td>
-        </tr>
-    </c:forEach>
+    <%--<c:forEach var="appointment"  items="${appointments}" >--%>
+        <%--<tr>--%>
+            <%--<td>${appointment.appointmentId}</td>--%>
+            <%--<td><fmt:formatDate value="${appointment.timeslot.startTime}" pattern="EEE MMM d yyyy, HH:mm"/> - <fmt:formatDate value="${appointment.timeslot.endTime}" pattern="HH:mm"/></td>--%>
+            <%--<td>${appointment.firstName} ${appointment.lastName}</td>--%>
+            <%--<td>${appointment.state}</td>--%>
+            <%--<td>--%>
+                <%--<c:if test="${appointment.state eq 'PENDING'}">--%>
+                    <%--<button type="button" onclick="approvel('${appointment.appointmentId}')" class="btn btn-danger" data-dismiss="modal">Approvel--%>
+                    <%--</button>--%>
+                <%--</c:if>--%>
+            <%--</td>--%>
+        <%--</tr>--%>
+    <%--</c:forEach>--%>
 
     </tbody>
 </table>
 <script>
+    function getRootPath(){
+        var curWwwPath=window.document.location.href;
+        var pathName=window.document.location.pathname;
+        var pos=curWwwPath.indexOf(pathName);
+        var localhostPaht=curWwwPath.substring(0,pos);
+        var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);
+        return(localhostPaht+projectName);
+    }
 
     function approvel(appointmentId){
         window.location.href="${pageContext.request.contextPath}/appointment?action=confirm&appointmentId="+appointmentId;
     }
+
+    $(function(){
+        //get list
+        $.get(getRootPath() + '/appointment?action=getList').done(function (o) {
+            let obj = JSON.parse(o);
+            $.each(obj,function(index,e){
+                var tr = $("<tr>");
+                $("<td>").text(e.appointmentId).appendTo(tr);
+                $("<td>").text(e.startTimeStr+" -"+ e.endTimeStr)
+                        .appendTo(tr);
+                $("<td>").text(e.firstName+" "+ e.lastName)
+                        .appendTo(tr);
+                $("<td>").text(e.state)
+                        .appendTo(tr);
+                if(e.state=='PENDING'){
+                    $("<button>").attr("onclick",'approvel("'+ e.appointmentId+'")')
+                                 .attr("class","btn btn-danger").text("Approvel").appendTo(tr);
+                }
+                tr.appendTo($("#appendBody"));
+            });
+        });
+    });
+
 </script>
 </body>
 </html>
