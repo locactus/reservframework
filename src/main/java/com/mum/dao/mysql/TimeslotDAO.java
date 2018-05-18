@@ -75,8 +75,9 @@ public class TimeslotDAO extends BaseDAO implements ITimeslotDAO {
         // pstmt.setString(3, timeslot.getUuid());
         pstmt.executeUpdate();
         ResultSet keys = pstmt.getGeneratedKeys();
-        keys.next();
-        int timeslotId = keys.getInt(1);
+        int timeslotId = -1;
+        if (keys.next())
+            timeslotId = keys.getInt(1);
         keys.close();
         pstmt.close();
         conn.close();
