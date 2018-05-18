@@ -22,11 +22,6 @@ public class AppointmentDAO extends BaseDAO implements IAppointmentDAO {
         ResultSet rset = pstmt.executeQuery(sql);
         int numcols = rset.getMetaData().getColumnCount();
 
-        if (!rset.isBeforeFirst()) {
-            // Empty table
-            return null;
-        }
-
         result = new ArrayList<>();
 
         while (rset.next()) {

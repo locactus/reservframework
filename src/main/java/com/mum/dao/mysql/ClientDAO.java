@@ -20,13 +20,8 @@ public class ClientDAO extends BaseDAO implements IClientDAO {
         conn = DataSource.getInstance().getConnection();
         Statement pstmt = super.conn.createStatement();
         this.lastExecutedStatement = pstmt.toString();
+        System.out.println(pstmt);
         ResultSet rset = pstmt.executeQuery(sql);
-        int numcols = rset.getMetaData().getColumnCount();
-
-            if (!rset.isBeforeFirst()) {
-            // Empty table
-            return null;
-        }
 
         result = new ArrayList<>();
 
@@ -62,12 +57,6 @@ public class ClientDAO extends BaseDAO implements IClientDAO {
         pstmt.setInt(1, clientId);
         this.lastExecutedStatement = pstmt.toString();
         ResultSet rset = pstmt.executeQuery();
-        int numcols = rset.getMetaData().getColumnCount();
-
-        if (!rset.isBeforeFirst()) {
-            // Empty table
-            return null;
-        }
         rset.next();
         String firstName = rset.getString("firstname");
         String lastName = rset.getString("lastname");
@@ -82,7 +71,7 @@ public class ClientDAO extends BaseDAO implements IClientDAO {
         client.setEmail(email);
         rset.close();
         pstmt.close();
-        super.conn.close();
+        conn.close();
         return client;
     }
 
@@ -93,13 +82,8 @@ public class ClientDAO extends BaseDAO implements IClientDAO {
         String sql = "SELECT * FROM client WHERE firstname = ?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setString(1, firstname);
+        System.out.println(pstmt);
         ResultSet rset = pstmt.executeQuery();
-        int numcols = rset.getMetaData().getColumnCount();
-
-        if (!rset.isBeforeFirst()) {
-            // Empty table
-            return null;
-        }
 
         rset.next();
         String lastName = rset.getString("lastname");
@@ -120,7 +104,7 @@ public class ClientDAO extends BaseDAO implements IClientDAO {
     }
 
     @Override
-    public boolean addClient(Client client) {
+    public boolean addClient(Client client) throws SQLException {
         Connection conn = DataSource.getInstance().getConnection();
         String sql = "insert into client(firstname, lastname, phonenumber, email) values(?, ?, ?, ?)";
         PreparedStatement pstmt = null;
@@ -149,6 +133,7 @@ public class ClientDAO extends BaseDAO implements IClientDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        conn.close();
         return true;
 
     }

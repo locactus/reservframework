@@ -21,17 +21,12 @@ public class RequestDAO extends BaseDAO implements IRequestDAO {
         List<Request> result = null;
 
         conn = DataSource.getInstance().getConnection();
-        Statement pstmt = super.conn.createStatement();
-        ResultSet rset = pstmt.executeQuery(sql);
-        int numcols = rset.getMetaData().getColumnCount();
 
-        if (!rset.isBeforeFirst()) {
-            // Empty table
-            return null;
-        }
+        Statement pstmt = super.conn.createStatement();
+        System.out.println(sql);
+        ResultSet rset = pstmt.executeQuery(sql);
 
         result = new ArrayList<>();
-
         while (rset.next()) {
             int requestId = rset.getInt("requestId");
             RequestType type = RequestType.values()[rset.getInt("type")];
@@ -51,6 +46,8 @@ public class RequestDAO extends BaseDAO implements IRequestDAO {
         rset.close();
         pstmt.close();
         conn.close();
+        System.out.println();
+        System.out.println();
         return result;
     }
 
@@ -62,8 +59,17 @@ public class RequestDAO extends BaseDAO implements IRequestDAO {
     //Get the latest request object
     @Override
     public List<Request> getRequestsByAppointmentId(int apotmentId) throws SQLException {
-        return this._get(String.format("SELECT * FROM request WHERE appointmentId = %d order by datetimeCreated desc " +
-                "limit 1", apotmentId));
+        return this._get(String.format("SELECT * FROM request WHERE appointmentId = %d", apotmentId));
+    }
+
+    @Override
+    public Request getLatestRequestByAppointmentId(int appointmentId) throws SQLException {
+        List<Request> result = this._get(String.format("SELECT * FROM request WHERE appointmentId = %d order by datetimeCreated desc " +
+                "limit 1", appointmentId));
+        if (result != null && !result.isEmpty()) {
+            return result.get(0);
+        }
+        return null;
     }
 
     @Override

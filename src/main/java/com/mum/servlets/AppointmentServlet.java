@@ -2,6 +2,9 @@ package com.mum.servlets;
 
 import com.mum.dao.*;
 import com.mum.dto.AppointmentDTO;
+import com.mum.dto.AppointmentDTOBuilder;
+import com.mum.dto.BuildDirector;
+import com.mum.dto.IBuilder;
 import com.mum.model.Appointment;
 import com.mum.model.Client;
 import com.mum.model.Request;
@@ -22,6 +25,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @WebServlet(urlPatterns = "/appointment")
@@ -95,7 +99,15 @@ public class AppointmentServlet extends HttpServlet {
   private List<AppointmentDTO> getAll() throws SQLException {
       List<Appointment> allAppointment = appointmentDao.getAll();
       return  allAppointment.stream()
-              .map(apointment -> mapToDTO(apointment))
+              .map(appintment -> {
+
+                IBuilder builder = new AppointmentDTOBuilder(appintment);
+                BuildDirector director = new BuildDirector(builder);
+                director.build();
+                return ((AppointmentDTOBuilder) builder).get();
+              })
+              // .map(apointment -> mapToDTO(apointment))
+
               .collect(Collectors.toList());
   }
 
