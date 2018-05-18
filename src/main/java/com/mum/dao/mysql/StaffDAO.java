@@ -20,18 +20,19 @@ public class StaffDAO extends BaseDAO implements IStaffDAO {
         pstmt.setInt(1, staffId);
         ResultSet rset = pstmt.executeQuery();
 
-        rset.next();
-        String firstName = rset.getString("firstname");
-        String lastName = rset.getString("lastname");
-        String phoneNumber = rset.getString("phonenumber");
-        String email = rset.getString("email");
+        if(rset.next()) {
+            String firstName = rset.getString("firstname");
+            String lastName = rset.getString("lastname");
+            String phoneNumber = rset.getString("phonenumber");
+            String email = rset.getString("email");
 
-        staff = new Staff();
-        staff.setStaffId(staffId);
-        staff.setFirstName(firstName);
-        staff.setLastName(lastName);
-        staff.setPhoneNumber(phoneNumber);
-        staff.setEmail(email);
+            staff = new Staff();
+            staff.setStaffId(staffId);
+            staff.setFirstName(firstName);
+            staff.setLastName(lastName);
+            staff.setPhoneNumber(phoneNumber);
+            staff.setEmail(email);
+        }
         rset.close();
         pstmt.close();
         conn.close();
@@ -46,19 +47,20 @@ public class StaffDAO extends BaseDAO implements IStaffDAO {
         pstmt.setString(1, userName);
         System.out.println(pstmt);
         ResultSet rset = pstmt.executeQuery();
+        Staff staff = null;
+        if (rset.next()) {
+            String firstName = rset.getString("firstname");
+            String lastName = rset.getString("lastname");
+            String phoneNumber = rset.getString("phonenumber");
+            String email = rset.getString("email");
 
-        rset.next();
-        String firstName = rset.getString("firstname");
-        String lastName = rset.getString("lastname");
-        String phoneNumber = rset.getString("phonenumber");
-        String email = rset.getString("email");
-
-        Staff staff = new Staff();
-        staff.setUserName(userName);
-        staff.setFirstName(firstName);
-        staff.setLastName(lastName);
-        staff.setPhoneNumber(phoneNumber);
-        staff.setEmail(email);
+            staff = new Staff();
+            staff.setUserName(userName);
+            staff.setFirstName(firstName);
+            staff.setLastName(lastName);
+            staff.setPhoneNumber(phoneNumber);
+            staff.setEmail(email);
+        }
         pstmt.close();
         pstmt.close();
         conn.close();

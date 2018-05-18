@@ -59,12 +59,12 @@ public class AppointmentDAO extends BaseDAO implements IAppointmentDAO {
         System.out.println(pstmt);
         pstmt.executeUpdate();
         ResultSet keys = pstmt.getGeneratedKeys();
-        keys.next();
-        int apotmentId = keys.getInt(1);
+        int apotmentId = -1;
+        if (keys.next())
+            apotmentId= keys.getInt(1);
         keys.close();
         pstmt.close();
         conn.close();
-        System.out.println("new apotmentId = " + apotmentId);
         return apotmentId;
     }
 
