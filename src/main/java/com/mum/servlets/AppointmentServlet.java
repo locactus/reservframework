@@ -14,6 +14,7 @@ import com.mum.model.enums.RequestType;
 import com.mum.model.enums.UserType;
 import com.mum.pattern.flyweight.ClientFactory;
 import com.mum.pattern.flyweight.User;
+import com.mum.pattern.iterator.IteratorRepository;
 import com.mum.service.MakeRequestCommand;
 import com.mum.service.RequestCommand;
 
@@ -26,6 +27,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -101,7 +103,14 @@ public class AppointmentServlet extends HttpServlet {
 
   private List<AppointmentDTO> getAll() throws SQLException {
       List<Appointment> allAppointment = appointmentDao.getAll();
-      return  allAppointment.stream()
+    IteratorRepository iteratorRepository = new IteratorRepository(allAppointment);
+    //Log all the appointment info
+    while (iteratorRepository.hasNext()) {
+      Appointment next = (Appointment)iteratorRepository.next();
+      System.out.println(next);
+    }
+
+    return  allAppointment.stream()
               .map(appintment -> {
 
                 IBuilder builder = new AppointmentDTOBuilder(appintment);
