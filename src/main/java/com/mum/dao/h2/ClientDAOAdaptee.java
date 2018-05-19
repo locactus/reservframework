@@ -6,40 +6,26 @@ import com.mum.model.Client;
 import java.sql.SQLException;
 import java.util.List;
 
-public class ClientDAO extends BaseDAO implements IClientDAO {
+public class ClientDAOAdaptee extends BaseDAO  {
 
-    @Override
     public Client getClientByClientId(int clientId) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Override
     public Client getClientByFirstname(String firstname) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Override
     public int insert(Client client) throws SQLException {
         return 0;
     }
 
-    @Override
     public List<Client> getAll() throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Override
-    public boolean addClient(Client client) {
+    public boolean register(Client client) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Override
-    public void accept(IVisitor visitor) {
-        visitor.visit(this);
-    }
-
-    @Override
-    public String getLastExecutedStatement() {
-        return this.lastExecutedStatement;
-    }
 }
