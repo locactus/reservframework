@@ -44,11 +44,11 @@ public class RequestDAO extends BaseDAO implements IRequestDAO {
 
     @Override
     public void accept(IVisitor visitor) {
-        visitor.visitRequestDAO(this);
+        visitor.visit(this);
     }
 
     @Override
     public String getLastExecutedStatement() {
-        return null;
+        return this.lastExecutedStatement;
     }
 }

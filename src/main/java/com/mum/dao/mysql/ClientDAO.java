@@ -20,7 +20,6 @@ public class ClientDAO extends BaseDAO implements IClientDAO {
         conn = DataSource.getInstance().getConnection();
         Statement pstmt = super.conn.createStatement();
         this.lastExecutedStatement = pstmt.toString();
-        System.out.println(pstmt);
         ResultSet rset = pstmt.executeQuery(sql);
 
         result = new ArrayList<>();
@@ -90,7 +89,7 @@ public class ClientDAO extends BaseDAO implements IClientDAO {
         String sql = "SELECT * FROM client WHERE firstname = ?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setString(1, firstname);
-        System.out.println(pstmt);
+        this.lastExecutedStatement = pstmt.toString();
         ResultSet rset = pstmt.executeQuery();
 
         if(rset.next()) {
@@ -133,7 +132,8 @@ public class ClientDAO extends BaseDAO implements IClientDAO {
         }
 
         try {
-            return pstmt.execute();
+            this.lastExecutedStatement = pstmt.toString();
+            pstmt.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -156,8 +156,8 @@ public class ClientDAO extends BaseDAO implements IClientDAO {
         pstmt.setString(2, client.getLastName());
         pstmt.setString(3, client.getPhoneNumber());
         pstmt.setString(4, client.getEmail());
-        System.out.println(pstmt);
         pstmt.executeUpdate();
+        this.lastExecutedStatement = pstmt.toString();
         ResultSet keys = pstmt.getGeneratedKeys();
         keys.next();
         int clientId = keys.getInt(1);
@@ -167,7 +167,7 @@ public class ClientDAO extends BaseDAO implements IClientDAO {
 
     @Override
     public void accept(IVisitor visitor) {
-        visitor.visitClientDAO(this);
+        visitor.visit(this);
     }
 
     @Override

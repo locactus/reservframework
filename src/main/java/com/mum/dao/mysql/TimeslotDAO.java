@@ -22,8 +22,9 @@ public class TimeslotDAO extends BaseDAO implements ITimeslotDAO {
         PreparedStatement pstmt = super.conn.prepareStatement(sql);
         pstmt.setInt(1, timeslotId);
         ResultSet rset = pstmt.executeQuery();
-        Timeslot timeslot = new Timeslot();
+        this.lastExecutedStatement = pstmt.toString();
 
+        Timeslot timeslot = new Timeslot();
         while(rset.next()) {
             Date startTime = new Date(rset.getTimestamp("starttime").getTime());
             Date endTime = new Date(rset.getTimestamp("endtime").getTime());
@@ -44,7 +45,7 @@ public class TimeslotDAO extends BaseDAO implements ITimeslotDAO {
         String sql = "SELECT * FROM timeslot";
         PreparedStatement pstmt = super.conn.prepareStatement(sql);
         ResultSet rset = pstmt.executeQuery();
-
+        this.lastExecutedStatement = pstmt.toString();
         result = new ArrayList<>();
 
         while (rset.next()) {
@@ -74,6 +75,7 @@ public class TimeslotDAO extends BaseDAO implements ITimeslotDAO {
         pstmt.setTimestamp(2, new Timestamp(timeslot.getEndTime().getTime()));
         // pstmt.setString(3, timeslot.getUuid());
         pstmt.executeUpdate();
+        this.lastExecutedStatement = pstmt.toString();
         ResultSet keys = pstmt.getGeneratedKeys();
         int timeslotId = -1;
         if (keys.next())
@@ -90,20 +92,21 @@ public class TimeslotDAO extends BaseDAO implements ITimeslotDAO {
         String sql = "DELETE FROM timeslot WHERE timeslotId = ? ";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setInt(1, timeslotId);
-        System.out.println(pstmt);
+        this.lastExecutedStatement = pstmt.toString();
         pstmt.executeUpdate();
         pstmt.close();
         conn.close();
         return true;
     }
 
+
     @Override
     public void accept(IVisitor visitor) {
-        visitor.visitTimeslotDAO(this);
+        visitor.visit(this);
     }
 
     @Override
     public String getLastExecutedStatement() {
-        return null;
+        return this.lastExecutedStatement;
     }
 }

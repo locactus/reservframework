@@ -46,6 +46,7 @@ public class AppointmentDAO extends BaseDAO implements IAppointmentDAO {
 
     @Override
     public String getLastExecutedStatement() {
-        return null;
+        return this.lastExecutedStatement;
     }
+
 }
