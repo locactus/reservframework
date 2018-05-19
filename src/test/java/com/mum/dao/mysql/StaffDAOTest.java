@@ -2,7 +2,6 @@ package com.mum.dao.mysql;
 
 import com.mum.dao.DataAccessFactory;
 import com.mum.dao.IStaffDAO;
-import com.mum.dao.mysql.StaffDAO;
 import com.mum.model.Staff;
 import org.junit.Test;
 

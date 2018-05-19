@@ -1,7 +1,6 @@
 package com.mum.dao.mysql;
 
 
-import com.mum.dao.DataAccessFactory;
 import com.mum.dao.IDAO;
 import com.mum.datasource.DataSource;
 import com.mum.model.Client;

@@ -1,6 +1,6 @@
-package com.mum.dao;
+package com.mum.dao.visitor;
 
-import com.mum.dao.mysql.BaseDAO;
+import com.mum.dao.*;
 
 public class StatementLogVisitor implements IVisitor {
 

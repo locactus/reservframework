@@ -1,6 +1,7 @@
 package com.mum.dto;
 
 import com.mum.dao.*;
+import com.mum.dao.DataAccessFactory;
 import com.mum.model.Appointment;
 import com.mum.model.Client;
 import com.mum.model.Request;
