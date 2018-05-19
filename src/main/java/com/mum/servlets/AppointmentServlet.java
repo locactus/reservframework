@@ -1,5 +1,6 @@
 package com.mum.servlets;
 
+import com.google.gson.Gson;
 import com.mum.dao.*;
 import com.mum.dto.AppointmentDTO;
 import com.mum.dto.AppointmentDTOBuilder;
@@ -13,6 +14,10 @@ import com.mum.model.enums.RequestState;
 import com.mum.model.enums.RequestType;
 import com.mum.model.enums.UserType;
 import com.mum.pattern.flyweight.ClientFactory;
+import com.mum.pattern.iterator.IteratorRepository;
+import com.mum.pattern.memento.CareTaker;
+import com.mum.pattern.memento.Memento;
+import com.mum.pattern.memento.ProcessState;
 import com.mum.service.MakeRequestCommand;
 import com.mum.service.RequestCommand;
 
@@ -27,7 +32,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @WebServlet(urlPatterns = "/appointment")
@@ -78,8 +82,8 @@ public class AppointmentServlet extends HttpServlet {
         List<Client> clientList = clientDao.getAll();
         req.setAttribute("timeslotList", timeslotList);
         req.getRequestDispatcher(req.getContextPath() + "/createAppo.jsp").forward(req, resp);
-      } else if (action.equals("addAppo")) {
-
+      } else if (action.equals("getList")) {
+        this.getList(req,resp);
       }
     } catch (Exception e) {
       e.printStackTrace();
@@ -100,7 +104,14 @@ public class AppointmentServlet extends HttpServlet {
 
   private List<AppointmentDTO> getAll() throws SQLException {
       List<Appointment> allAppointment = appointmentDao.getAll();
-      return  allAppointment.stream()
+    IteratorRepository iteratorRepository = new IteratorRepository(allAppointment);
+    //Log all the appointment info
+    while (iteratorRepository.hasNext()) {
+      Appointment next = (Appointment)iteratorRepository.next();
+      System.out.println(next);
+    }
+
+    return  allAppointment.stream()
               .map(appintment -> {
 
                 IBuilder builder = new AppointmentDTOBuilder(appintment);
@@ -114,15 +125,21 @@ public class AppointmentServlet extends HttpServlet {
   }
 
   private void listAllAppointment(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
-    req.setAttribute("appointments", getAll());
     req.getRequestDispatcher(req.getContextPath() + "/appoList.jsp").forward(req, resp);
   }
 
   private void listAdminAppointment(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
-    req.setAttribute("appointments", getAll());
     req.getRequestDispatcher(req.getContextPath() + "/reserveList.jsp").forward(req, resp);
   }
 
+  private void getList(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException {
+    List<AppointmentDTO> list = this.getAll();
+    Gson gson = new Gson();
+    String json = gson.toJson(list);
+    System.out.println(json);
+    resp.getWriter().print(json);
+    resp.flushBuffer();
+  }
 
 
   private AppointmentDTO mapToDTO(Appointment apointment) {
@@ -167,6 +184,7 @@ public class AppointmentServlet extends HttpServlet {
    * @param resp
    */
   private void addAppointment(HttpServletRequest req, HttpServletResponse resp) {
+    CareTaker careTaker = new CareTaker();
     String firstName = req.getParameter("firstName");
     String lastName = req.getParameter("lastName");
     String phoneNumber = req.getParameter("phoneNumber");
@@ -182,6 +200,7 @@ public class AppointmentServlet extends HttpServlet {
 
       // timeslot.setUuid(uuid);
       timeslotId = timeslotDao.insert(timeslot);
+      careTaker.add(new Memento("timeslot", ProcessState.NEWTIMESLOT, timeslotId));
     } catch (ParseException e) {
       e.printStackTrace();
     } catch (SQLException e) {
@@ -199,8 +218,10 @@ public class AppointmentServlet extends HttpServlet {
           client.setPhoneNumber(phoneNumber);
           client.setEmail(email);
           clientDao.addClient(client);
+          clientByFirstname = client;
         }
       }
+      careTaker.add(new Memento("newclient", ProcessState.NEWCLIENT, clientByFirstname.getClientId()));
 
       // Timeslot tl = timeslotDao.getByUuid(uuid);
       Timeslot tl = timeslotDao.getByTimeslotId(timeslotId);
@@ -208,10 +229,15 @@ public class AppointmentServlet extends HttpServlet {
       Appointment appointment = new Appointment(tl.getTimeslotId(), byFirstname.getClientId());
 
       int apointmentId = appointmentDao.insert(appointment);
+      careTaker.add(new Memento("newappointment", ProcessState.NEWAPPOINTMENT, apointmentId));
 
       RequestCommand cmd = new MakeRequestCommand(appointmentDao.getAppointmentById(apointmentId));
       cmd.setWorker(requestDao);
       cmd.execute();
+
+      if(!isValidState(careTaker)) {
+        rollbackData(careTaker);
+      }
 
       resp.sendRedirect(req.getContextPath() + "/appointment?action=listofUser");
     } catch (SQLException e) {
@@ -221,6 +247,32 @@ public class AppointmentServlet extends HttpServlet {
     }
 
   }
+
+  //When there is something wrong, rollback the timeslot, appointment, leave it stable for client.
+  private void rollbackData(CareTaker careTaker) {
+    List<Memento> mementoList = careTaker.getMementoList();
+    for (Memento memento : mementoList) {
+      if(memento.getProcessState().equals(ProcessState.NEWTIMESLOT)) {
+        try {
+          timeslotDao.delete(memento.getBusinessId());
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      } else if(memento.getProcessState().equals(ProcessState.NEWAPPOINTMENT)) {
+        try {
+          appointmentDao.delete(memento.getBusinessId());
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+  }
+
+  //status validation
+  private boolean isValidState(CareTaker careTaker) {
+    return careTaker.getMementoList().size() == 3;
+  }
+
   private void addTimeSlot(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException, ParseException {
     String startDate = req.getParameter("startDate");
     String endDate = req.getParameter("endDate");

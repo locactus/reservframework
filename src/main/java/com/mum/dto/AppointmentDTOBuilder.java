@@ -1,5 +1,6 @@
 package com.mum.dto;
 
+import com.mum.com.mum.util.DateUtil;
 import com.mum.dao.DataAccessFactory;
 import com.mum.dao.IRequestDAO;
 import com.mum.model.Appointment;
@@ -8,8 +9,6 @@ import com.mum.model.Request;
 import com.mum.model.Timeslot;
 
 import java.sql.SQLException;
-import java.util.Comparator;
-import java.util.List;
 
 public class AppointmentDTOBuilder implements IBuilder {
 
@@ -42,6 +41,10 @@ public class AppointmentDTOBuilder implements IBuilder {
     private void buildTimeslot() throws IllegalAccessException, InstantiationException, ClassNotFoundException, SQLException {
         Timeslot timeslot = DataAccessFactory.createTimeslotDao().getByTimeslotId(this.appointment.getTimeslotId());
         appointmentDTO.setTimeslot(timeslot);
+        if(null!=timeslot){
+            appointmentDTO.setStartTimeStr(DateUtil.getString(timeslot.getStartTime()));
+            appointmentDTO.setEndTimeStr(DateUtil.getString(timeslot.getEndTime()));
+        }
         appointmentDTO.setTimeslotId(timeslot.getTimeslotId());
     }
 
