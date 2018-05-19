@@ -4,6 +4,8 @@ import com.mum.com.mum.util.DateUtil;
 import com.mum.dao.DataAccessFactory;
 import com.mum.dao.IRequestDAO;
 import com.mum.dao.*;
+import com.mum.dao.visitor.IVisitor;
+import com.mum.dao.visitor.StatementLogVisitor;
 import com.mum.model.Appointment;
 import com.mum.model.Client;
 import com.mum.model.Request;

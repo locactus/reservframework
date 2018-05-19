@@ -1,7 +1,7 @@
 package com.mum.dao;
 
 /**
- * Simple factory to create the dao instance based on the db type assigned.
+ * Factory method to create the dao instance based on the db type assigned.
  */
 public class DataAccessFactory {
 

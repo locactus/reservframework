@@ -1,7 +1,7 @@
 package com.mum.dao.mysql;
 
 import com.mum.dao.IRequestDAO;
-import com.mum.dao.IVisitor;
+import com.mum.dao.visitor.IVisitor;
 import com.mum.datasource.DataSource;
 import com.mum.model.Request;
 import com.mum.model.enums.RequestState;

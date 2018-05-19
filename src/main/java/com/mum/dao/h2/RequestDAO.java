@@ -1,7 +1,7 @@
 package com.mum.dao.h2;
 
 import com.mum.dao.IRequestDAO;
-import com.mum.dao.IVisitor;
+import com.mum.dao.visitor.IVisitor;
 import com.mum.model.Request;
 import java.sql.SQLException;
 import java.util.List;
