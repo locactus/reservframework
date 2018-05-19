@@ -1,11 +1,7 @@
 package com.mum.servlets;
 
 import com.google.gson.Gson;
-import com.mum.dao.*;
 import com.mum.dto.AppointmentDTO;
-import com.mum.dto.AppointmentDTOBuilder;
-import com.mum.dto.BuildDirector;
-import com.mum.dto.IBuilder;
 import com.mum.model.Appointment;
 import com.mum.model.Client;
 import com.mum.model.Request;
@@ -14,7 +10,6 @@ import com.mum.model.enums.RequestState;
 import com.mum.model.enums.RequestType;
 import com.mum.model.enums.UserType;
 import com.mum.pattern.flyweight.ClientFactory;
-import com.mum.pattern.iterator.IteratorRepository;
 import com.mum.pattern.memento.CareTaker;
 import com.mum.pattern.memento.Memento;
 import com.mum.pattern.memento.ProcessState;
@@ -31,33 +26,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @WebServlet(urlPatterns = "/appointment")
 public class AppointmentServlet extends BaseTemplate {
-
-  private IStaffDAO staffDao;
-  private IClientDAO clientDao;
-  private IRequestDAO requestDao;
-  private IAppointmentDAO appointmentDao;
-  private ITimeslotDAO timeslotDao;
-
-  {
-    try {
-      staffDao = DataAccessFactory.createStaffDao();
-      clientDao = DataAccessFactory.createClientDao();
-      requestDao = DataAccessFactory.createRequestDao();
-      appointmentDao = DataAccessFactory.createAppointmentDao();
-      timeslotDao = DataAccessFactory.createTimeslotDao();
-    } catch (ClassNotFoundException e) {
-      e.printStackTrace();
-    } catch (IllegalAccessException e) {
-      e.printStackTrace();
-    } catch (InstantiationException e) {
-      e.printStackTrace();
-    }
-  }
-
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
@@ -77,9 +48,6 @@ public class AppointmentServlet extends BaseTemplate {
         addTimeSlot(req, resp);
         resp.sendRedirect(req.getContextPath() + "/appointment/list");
       } else if (action.equals("toaddAppo")) {
-        List<Timeslot> timeslotList = timeslotDao.getAll();
-        List<Client> clientList = clientDao.getAll();
-        req.setAttribute("timeslotList", timeslotList);
         req.getRequestDispatcher(req.getContextPath() + "/createAppo.jsp").forward(req, resp);
       } else if (action.equals("getList")) {
         this.getList(req,resp);
@@ -97,31 +65,12 @@ public class AppointmentServlet extends BaseTemplate {
     request.setState(RequestState.ACCEPT);
     request.setDatetimeCreated(new Date());
     requestDao.insert(request);
+    revitQueryCache.invalidate("appoCache");
     resp.sendRedirect(req.getContextPath() + "/appointment?action=list");
 
   }
 
-  private List<AppointmentDTO> getAll() throws SQLException {
-      List<Appointment> allAppointment = appointmentDao.getAll();
-    IteratorRepository iteratorRepository = new IteratorRepository(allAppointment);
-    //Log all the appointment info
-    while (iteratorRepository.hasNext()) {
-      Appointment next = (Appointment)iteratorRepository.next();
-      System.out.println(next);
-    }
 
-    return  allAppointment.stream()
-              .map(appintment -> {
-
-                IBuilder builder = new AppointmentDTOBuilder(appintment);
-                BuildDirector director = new BuildDirector(builder);
-                director.build();
-                return ((AppointmentDTOBuilder) builder).get();
-              })
-              // .map(apointment -> mapToDTO(apointment))
-
-              .collect(Collectors.toList());
-  }
 
   private void listAllAppointment(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
     req.getRequestDispatcher(req.getContextPath() + "/appoList.jsp").forward(req, resp);
@@ -131,8 +80,9 @@ public class AppointmentServlet extends BaseTemplate {
     req.getRequestDispatcher(req.getContextPath() + "/reserveList.jsp").forward(req, resp);
   }
 
-  private void getList(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException {
-    List<AppointmentDTO> list = this.getAll();
+  private void getList(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+    List<AppointmentDTO> list =
+    this.getAllByProxy();
     Gson gson = new Gson();
     String json = gson.toJson(list);
     System.out.println(json);
@@ -237,7 +187,7 @@ public class AppointmentServlet extends BaseTemplate {
       if(!isValidState(careTaker)) {
         rollbackData(careTaker);
       }
-
+      revitQueryCache.invalidate("appoCache");
       resp.sendRedirect(req.getContextPath() + "/appointment?action=listofUser");
     } catch (SQLException e) {
       e.printStackTrace();
@@ -290,6 +240,15 @@ public class AppointmentServlet extends BaseTemplate {
     appointment.setTimeslotId(Integer.valueOf(timeslotId));
     appointmentDao.insert(appointment);
   }
+
+  private List<AppointmentDTO> getAllByProxy() throws Exception {
+    return revitQueryCache.get("appoCache");
+}
+
+
+
+
+
 
 
 
