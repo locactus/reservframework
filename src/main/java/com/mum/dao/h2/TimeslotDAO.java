@@ -30,16 +30,11 @@ public class TimeslotDAO extends BaseDAO implements ITimeslotDAO {
 
     @Override
     public void accept(IVisitor visitor) {
-        visitor.visitTimeslotDAO(this);
+        visitor.visit(this);
     }
 
     @Override
     public String getLastExecutedStatement() {
-        return null;
+        return this.lastExecutedStatement;
     }
-
-    // @Override
-    // public Timeslot getByUuid(String uuid) throws SQLException {
-    //     throw new UnsupportedOperationException("Not supported yet.");
-    // }
 }

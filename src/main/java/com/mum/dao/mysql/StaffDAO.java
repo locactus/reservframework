@@ -19,6 +19,7 @@ public class StaffDAO extends BaseDAO implements IStaffDAO {
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setInt(1, staffId);
         ResultSet rset = pstmt.executeQuery();
+        this.lastExecutedStatement = pstmt.toString();
 
         if(rset.next()) {
             String firstName = rset.getString("firstname");
@@ -45,7 +46,7 @@ public class StaffDAO extends BaseDAO implements IStaffDAO {
         String sql = "SELECT * FROM staff WHERE userName = ?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setString(1, userName);
-        System.out.println(pstmt);
+        this.lastExecutedStatement = pstmt.toString();
         ResultSet rset = pstmt.executeQuery();
         Staff staff = null;
         if (rset.next()) {
@@ -69,11 +70,11 @@ public class StaffDAO extends BaseDAO implements IStaffDAO {
 
     @Override
     public void accept(IVisitor visitor) {
-        visitor.visitStaffDAO(this);
+        visitor.visit(this);
     }
 
     @Override
     public String getLastExecutedStatement() {
-        return null;
+        return this.lastExecutedStatement;
     }
 }

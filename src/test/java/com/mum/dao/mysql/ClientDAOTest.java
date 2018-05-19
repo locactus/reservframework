@@ -26,4 +26,14 @@ public class ClientDAOTest {
         }
         assertTrue(client.getFirstName().equals("Eleven"));
     }
+
+    @Test
+    public void getAll() throws SQLException {
+        assertTrue(!dao.getAll().isEmpty());
+    }
+
+    @Test
+    public void getClientByFirstname() throws SQLException {
+        assertTrue(dao.getClientByFirstname("Eleven") != null);
+    }
 }

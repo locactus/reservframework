@@ -1,28 +1,35 @@
 package com.mum.dao;
 
+import com.mum.dao.mysql.BaseDAO;
+
 public class StatementLogVisitor implements IVisitor {
+
     @Override
-    public void visitClientDAO(IClientDAO dao) {
-        dao.getLastExecutedStatement();
+    public void visit(IClientDAO dao) {
+        print(dao);
     }
 
     @Override
-    public void visitStaffDAO(IStaffDAO dao) {
-
+    public void visit(IStaffDAO dao) {
+        print(dao);
     }
 
     @Override
-    public void visitAppointmentDAO(IAppointmentDAO dao) {
-
+    public void visit(IAppointmentDAO dao) {
+        print(dao);
     }
 
     @Override
-    public void visitRequestDAO(IRequestDAO dao) {
-
+    public void visit(IRequestDAO dao) {
+        print(dao);
     }
 
     @Override
-    public void visitTimeslotDAO(ITimeslotDAO dao) {
+    public void visit(ITimeslotDAO dao) {
+        print(dao);
+    }
 
+    private void print(IDAO dao) {
+        System.out.println(">>>>>>>>>>>>>>>> SQL Statement: " + dao.getLastExecutedStatement());
     }
 }
