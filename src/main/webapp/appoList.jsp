@@ -42,7 +42,6 @@
 <button type="button" class="btn btn-primary" onclick="addAppo()" data-dismiss="modal">New Appointment
 </button>
 <script>
-<script>
     function getRootPath(){
         var curWwwPath=window.document.location.href;
         var pathName=window.document.location.pathname;
