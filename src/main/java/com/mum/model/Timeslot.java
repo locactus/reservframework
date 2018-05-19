@@ -2,7 +2,7 @@ package com.mum.model;
 
 import java.util.Date;
 
-public class Timeslot extends Template {
+public class Timeslot {
     private int timeslotId;
     private Date startTime;
     private Date endTime;

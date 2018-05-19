@@ -23,7 +23,6 @@ import com.mum.service.RequestCommand;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -35,7 +34,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @WebServlet(urlPatterns = "/appointment")
-public class AppointmentServlet extends HttpServlet {
+public class AppointmentServlet extends BaseTemplate {
 
   private IStaffDAO staffDao;
   private IClientDAO clientDao;
@@ -293,8 +292,5 @@ public class AppointmentServlet extends HttpServlet {
   }
 
 
-  @Override
-  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    doGet(req, resp);
-  }
+
 }

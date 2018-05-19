@@ -38,9 +38,13 @@
 
     </tbody>
 </table>
-<img id="loading" src="img/Loading_icon.gif"/>
+<p style="text-align:center;"> <img id="loading" src="img/Loading_icon.gif"/> </p>
 <button type="button" class="btn btn-primary" onclick="addAppo()" data-dismiss="modal">New Appointment
 </button>
+&nbsp;
+<button type="button" class="btn btn-primary" onclick="signOut()" data-dismiss="modal">Sign out
+</button>
+
 <script>
     function getRootPath(){
         var curWwwPath=window.document.location.href;
@@ -76,6 +80,9 @@
             });
         });
     });
+    function signOut(){
+        window.location.href="${pageContext.request.contextPath}/";
+    }
 
 </script>
 </body>

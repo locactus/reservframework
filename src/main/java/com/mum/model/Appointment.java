@@ -1,6 +1,6 @@
 package com.mum.model;
 
-public class Appointment extends Template{
+public class Appointment {
     private int appointmentId;
     private int timeslotId;
     private int clientId;

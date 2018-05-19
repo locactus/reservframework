@@ -5,7 +5,7 @@ import com.mum.model.enums.RequestType;
 
 import java.util.Date;
 
-public class Request extends Template {
+public class Request  {
     private int requestId;
     private RequestType type;
     private RequestState state;
