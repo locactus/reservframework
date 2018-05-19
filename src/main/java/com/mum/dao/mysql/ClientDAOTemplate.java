@@ -93,12 +93,16 @@ public abstract class ClientDAOTemplate extends BaseDAO implements IDAO {
      * @throws SQLException
      */
     protected void execute(String sql, Map<Integer, Object> params) throws SQLException {
+        // Step 1: get the connection
         // conn = DataSource.getInstance().getConnection();
+
+        // Step 2: prepare Statement
         // pstmt = conn.prepareStatement(sql);
         //
         // for (Map.Entry<Integer, Object> entry: params.entrySet()) {
         //     pstmt.setObject(entry.getKey(), entry.getValue());
         // }
+        // Step 3: execute the statement to get the result
         // this.lastExecutedStatement = pstmt.toString();
         // rset = pstmt.executeQuery();
 
