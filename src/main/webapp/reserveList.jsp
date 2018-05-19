@@ -39,7 +39,8 @@
 
     </tbody>
 </table>
-<img id="loading" src="img/Loading_icon.gif"/>
+<p style="text-align:center;"> <img id="loading" src="img/Loading_icon.gif"/> </p>
+
 
 <script>
     function getRootPath(){

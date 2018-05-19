@@ -38,9 +38,10 @@
 
     </tbody>
 </table>
-<img id="loading" src="img/Loading_icon.gif"/>
+<p style="text-align:center;"> <img id="loading" src="img/Loading_icon.gif"/> </p>
 <button type="button" class="btn btn-primary" onclick="addAppo()" data-dismiss="modal">New Appointment
 </button>
+<script>
 <script>
     function getRootPath(){
         var curWwwPath=window.document.location.href;
