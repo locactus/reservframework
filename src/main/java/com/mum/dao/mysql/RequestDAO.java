@@ -23,8 +23,8 @@ public class RequestDAO extends BaseDAO implements IRequestDAO {
         conn = DataSource.getInstance().getConnection();
 
         Statement pstmt = super.conn.createStatement();
-        System.out.println(sql);
         ResultSet rset = pstmt.executeQuery(sql);
+        this.lastExecutedStatement = sql;
 
         result = new ArrayList<>();
         while (rset.next()) {
@@ -78,7 +78,7 @@ public class RequestDAO extends BaseDAO implements IRequestDAO {
         pstmt.setInt(1, request.getAppointmentId());
         pstmt.setInt(2, request.getType().ordinal());
         pstmt.setInt(3, request.getState().ordinal());
-        System.out.println(pstmt);
+        this.lastExecutedStatement = pstmt.toString();
         pstmt.executeUpdate();
         ResultSet keys = pstmt.getGeneratedKeys();
         keys.next();
@@ -95,7 +95,7 @@ public class RequestDAO extends BaseDAO implements IRequestDAO {
         String sql = "DELETE FROM request WHERE requestId = ? ";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setInt(1, requestId);
-        System.out.println(pstmt);
+        this.lastExecutedStatement = pstmt.toString();
         pstmt.executeUpdate();
         pstmt.close();
         conn.close();
@@ -109,7 +109,7 @@ public class RequestDAO extends BaseDAO implements IRequestDAO {
         PreparedStatement pstmt = conn.prepareStatement(SQL);
         pstmt.setInt(1, request.getState().ordinal());
         pstmt.setInt(2, request.getType().ordinal());
-        System.out.println(pstmt);
+        this.lastExecutedStatement = pstmt.toString();
         pstmt.executeUpdate();
         pstmt.close();
         conn.close();
@@ -118,11 +118,11 @@ public class RequestDAO extends BaseDAO implements IRequestDAO {
 
     @Override
     public void accept(IVisitor visitor) {
-        visitor.visitRequestDAO(this);
+        visitor.visit(this);
     }
 
     @Override
     public String getLastExecutedStatement() {
-        return null;
+        return this.lastExecutedStatement;
     }
 }

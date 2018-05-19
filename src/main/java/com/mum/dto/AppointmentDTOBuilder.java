@@ -3,6 +3,7 @@ package com.mum.dto;
 import com.mum.com.mum.util.DateUtil;
 import com.mum.dao.DataAccessFactory;
 import com.mum.dao.IRequestDAO;
+import com.mum.dao.*;
 import com.mum.model.Appointment;
 import com.mum.model.Client;
 import com.mum.model.Request;
@@ -39,7 +40,13 @@ public class AppointmentDTOBuilder implements IBuilder {
     }
 
     private void buildTimeslot() throws IllegalAccessException, InstantiationException, ClassNotFoundException, SQLException {
-        Timeslot timeslot = DataAccessFactory.createTimeslotDao().getByTimeslotId(this.appointment.getTimeslotId());
+        ITimeslotDAO dao = DataAccessFactory.createTimeslotDao();
+
+        Timeslot timeslot = dao.getByTimeslotId(this.appointment.getTimeslotId());
+        // print the log via visitor
+        IVisitor statementLogVisitor = new StatementLogVisitor();
+        dao.accept(statementLogVisitor);
+
         appointmentDTO.setTimeslot(timeslot);
         if(null!=timeslot){
             appointmentDTO.setStartTimeStr(DateUtil.getString(timeslot.getStartTime()));
@@ -49,7 +56,13 @@ public class AppointmentDTOBuilder implements IBuilder {
     }
 
     private void buildUser() throws IllegalAccessException, InstantiationException, ClassNotFoundException, SQLException {
-        Client client = DataAccessFactory.createClientDao().getClientByClientId(this.appointment.getClientId());
+        IClientDAO dao = DataAccessFactory.createClientDao();
+
+        Client client = dao.getClientByClientId(this.appointment.getClientId());
+        // print the log via visitor
+        IVisitor statementLogVisitor = new StatementLogVisitor();
+        dao.accept(statementLogVisitor);
+
         appointmentDTO.setEmail(client != null ? client.getEmail() : "");
         appointmentDTO.setFirstName(client != null ? client.getFirstName() : "");
         appointmentDTO.setLastName(client != null ? client.getLastName() : "");
@@ -59,13 +72,12 @@ public class AppointmentDTOBuilder implements IBuilder {
 
     private void buildRequest() throws IllegalAccessException, InstantiationException, ClassNotFoundException, SQLException {
         IRequestDAO dao = DataAccessFactory.createRequestDao();
-        // List<Request> requests = dao.getRequestsByAppointmentId(this.appointment.getAppointmentId());
-        // if (requests != null && !requests.isEmpty()) {
-        //     requests.sort(Comparator.comparing(Request::getDatetimeCreated));
-        //     Request request = requests.get(0);
-        //     appointmentDTO.setState(request.getState());
-        // }
+
         Request request = dao.getLatestRequestByAppointmentId(this.appointment.getAppointmentId());
+        // print the log via visitor
+        IVisitor statementLogVisitor = new StatementLogVisitor();
+        dao.accept(statementLogVisitor);
+
         if (request != null) {
             appointmentDTO.setState(request.getState());
         }

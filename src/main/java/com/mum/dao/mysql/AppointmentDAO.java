@@ -20,6 +20,7 @@ public class AppointmentDAO extends BaseDAO implements IAppointmentDAO {
         conn = DataSource.getInstance().getConnection();
         Statement pstmt = super.conn.createStatement();
         ResultSet rset = pstmt.executeQuery(sql);
+        this.lastExecutedStatement = pstmt.toString();
         int numcols = rset.getMetaData().getColumnCount();
 
         result = new ArrayList<>();
@@ -56,7 +57,7 @@ public class AppointmentDAO extends BaseDAO implements IAppointmentDAO {
         PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         pstmt.setInt(1, apotment.getTimeslotId());
         pstmt.setInt(2, apotment.getClientId());
-        System.out.println(pstmt);
+        this.lastExecutedStatement = pstmt.toString();
         pstmt.executeUpdate();
         ResultSet keys = pstmt.getGeneratedKeys();
         int apotmentId = -1;
@@ -74,7 +75,7 @@ public class AppointmentDAO extends BaseDAO implements IAppointmentDAO {
         String sql = "DELETE FROM request WHERE appointmentId = ? ";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setInt(1, apotmentId);
-        System.out.println(pstmt);
+        this.lastExecutedStatement = pstmt.toString();
         pstmt.executeUpdate();
         pstmt.close();
         conn.close();
@@ -107,11 +108,11 @@ public class AppointmentDAO extends BaseDAO implements IAppointmentDAO {
 
     @Override
     public void accept(IVisitor visitor) {
-        visitor.visitAppointmentDAO(this);
+        visitor.visit(this);
     }
 
     @Override
     public String getLastExecutedStatement() {
-        return null;
+        return this.lastExecutedStatement;
     }
 }

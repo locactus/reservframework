@@ -20,11 +20,11 @@ public class StaffDAO extends BaseDAO implements IStaffDAO {
 
     @Override
     public void accept(IVisitor visitor) {
-        visitor.visitStaffDAO(this);
+        visitor.visit(this);
     }
 
     @Override
     public String getLastExecutedStatement() {
-        return null;
+        return this.lastExecutedStatement;
     }
 }
