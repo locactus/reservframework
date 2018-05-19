@@ -6,7 +6,7 @@ import com.mum.datasource.DataSource;
 
 import java.sql.Connection;
 
-public class BaseDAO {
+public abstract class BaseDAO {
     protected Connection conn = null;
     protected String lastExecutedStatement = null;
 }
