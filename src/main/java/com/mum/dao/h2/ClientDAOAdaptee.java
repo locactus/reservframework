@@ -24,6 +24,11 @@ public class ClientDAOAdaptee extends BaseDAO  {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    /**
+     * Insert a new client to db
+     * @param client
+     * @return
+     */
     public boolean register(Client client) {
         throw new UnsupportedOperationException("Not supported yet.");
     }

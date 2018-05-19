@@ -7,6 +7,9 @@ import com.mum.model.Client;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * Adapter Pattern for h2.ClientDAOAdaptee class.
+ */
 public class ClientDAOAdapter implements IClientDAO {
     private ClientDAOAdaptee dao;
 
@@ -29,6 +32,12 @@ public class ClientDAOAdapter implements IClientDAO {
         return dao.getClientByFirstname(firstname);
     }
 
+    /**
+     * Adapt the register() method to addClient() method
+     * @param client
+     * @return
+     * @throws SQLException
+     */
     @Override
     public boolean addClient(Client client) throws SQLException {
         return dao.register(client);
