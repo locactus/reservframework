@@ -1,24 +1,17 @@
 package com.mum.servlets;
 
 import com.mum.dao.DataAccessFactory;
-import com.mum.dao.IClientDAO;
-import com.mum.dao.IStaffDAO;
-import com.mum.dao.mysql.ClientDAO;
-import com.mum.dao.mysql.StaffDAO;
 import com.mum.model.Client;
 import com.mum.model.Staff;
 
-import java.io.IOException;
-import java.sql.SQLException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @WebServlet("/user")
-public class UserServlet extends HttpServlet {
+public class UserServlet extends BaseTemplate {
 
 
 
@@ -71,8 +64,5 @@ public class UserServlet extends HttpServlet {
     }
   }
 
-  @Override
-  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    doGet(req, resp);
-  }
+
 }

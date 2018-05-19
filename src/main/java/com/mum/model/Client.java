@@ -3,7 +3,7 @@ package com.mum.model;
 import com.mum.model.enums.UserType;
 import com.mum.pattern.flyweight.User;
 
-public class Client extends Template implements User {
+public class Client implements User {
     private int clientId;
     private String firstName;
     private String lastName;
