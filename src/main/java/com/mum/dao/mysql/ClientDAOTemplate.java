@@ -1,6 +1,7 @@
 package com.mum.dao.mysql;
 
 
+import com.mum.dao.DataAccessFactory;
 import com.mum.dao.IDAO;
 import com.mum.datasource.DataSource;
 import com.mum.model.Client;
@@ -12,6 +13,68 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+
+class DBRecourse {
+    protected Connection conn = null;
+    protected PreparedStatement pstmt = null;
+    protected ResultSet rset = null;
+
+    public Connection getConn() {
+        return conn;
+    }
+
+    public PreparedStatement getPstmt() {
+        return pstmt;
+    }
+
+    public ResultSet getRset() {
+        return rset;
+    }
+
+}
+abstract class Handler {
+
+    protected DBRecourse dr;
+    protected Handler successor;
+
+    public void setSuccessor(Handler successor) {
+        this.successor = successor;
+    }
+
+    public abstract void handleRequest(String sql, Map<Integer, Object> params, DBRecourse dr) throws SQLException;
+}
+
+class StatementHandler extends Handler {
+
+    @Override
+    public void handleRequest(String sql, Map<Integer, Object> params, DBRecourse dr) throws SQLException {
+        // this.dr = new DBRecourse();
+        dr.conn = DataSource.getInstance().getConnection();
+        this.successor.handleRequest(sql, params, dr);
+    }
+}
+
+class ParameterHandler extends Handler {
+
+    @Override
+    public void handleRequest(String sql, Map<Integer, Object> params, DBRecourse dr) throws SQLException {
+        dr.pstmt = dr.conn.prepareStatement(sql);
+
+        for (Map.Entry<Integer, Object> entry: params.entrySet()) {
+            dr.pstmt.setObject(entry.getKey(), entry.getValue());
+        }
+        this.successor.handleRequest(sql, params, dr);
+    }
+}
+
+class ExecuteQueryHandler extends Handler {
+
+    @Override
+    public void handleRequest(String sql, Map<Integer, Object> params, DBRecourse dr) throws SQLException {
+        dr.rset = dr.pstmt.executeQuery();
+    }
+}
 
 /**
  * An abstract class to provide two Template Method for ClientDao class.
@@ -30,14 +93,28 @@ public abstract class ClientDAOTemplate extends BaseDAO implements IDAO {
      * @throws SQLException
      */
     protected void execute(String sql, Map<Integer, Object> params) throws SQLException {
-        conn = DataSource.getInstance().getConnection();
-        pstmt = conn.prepareStatement(sql);
+        // conn = DataSource.getInstance().getConnection();
+        // pstmt = conn.prepareStatement(sql);
+        //
+        // for (Map.Entry<Integer, Object> entry: params.entrySet()) {
+        //     pstmt.setObject(entry.getKey(), entry.getValue());
+        // }
+        // this.lastExecutedStatement = pstmt.toString();
+        // rset = pstmt.executeQuery();
 
-        for (Map.Entry<Integer, Object> entry: params.entrySet()) {
-            pstmt.setObject(entry.getKey(), entry.getValue());
-        }
-        this.lastExecutedStatement = pstmt.toString();
-        rset = pstmt.executeQuery();
+        /**
+         * Switch to the Chain of Responsibility pattern
+         */
+        Handler statementHandler = new StatementHandler();
+        Handler paramenterHandler = new ParameterHandler();
+        Handler executeQueryHandler = new ExecuteQueryHandler();
+        statementHandler.setSuccessor(paramenterHandler);
+        paramenterHandler.setSuccessor(executeQueryHandler);
+        DBRecourse dr = new DBRecourse();
+        statementHandler.handleRequest(sql, params, dr);
+        conn = dr.getConn();
+        pstmt = dr.getPstmt();
+        rset = dr.getRset();
     }
 
     /**
