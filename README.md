@@ -1,3 +1,4 @@
+# reservation-framework [![CircleCI](https://circleci.com/gh/asd-framework/reservframework.svg?style=svg)](https://circleci.com/gh/asd-framework/reservframework)
 ## Reservation Framework
 A framework to implement the reservation system.
 
@@ -16,15 +17,15 @@ We implemented a website based on out framework. This website offered two key fe
 
 **Login page:**
 
-<img width="800" src="https://user-images.githubusercontent.com/5343215/40284054-56c6397e-5c4e-11e8-8db9-75926f192321.png">
+<img width="600" src="https://user-images.githubusercontent.com/5343215/40284054-56c6397e-5c4e-11e8-8db9-75926f192321.png">
 
 **Making new appointment:**
 
-<img width="800" src="https://user-images.githubusercontent.com/5343215/40284056-56f5c69e-5c4e-11e8-92e8-bfe3088ff782.png">
+<img width="600" src="https://user-images.githubusercontent.com/5343215/40284056-56f5c69e-5c4e-11e8-92e8-bfe3088ff782.png">
 
 **Processing the appointments:**
 
-<img width="800" src="https://user-images.githubusercontent.com/5343215/40284053-56ab8642-5c4e-11e8-9065-a0aced2a27ff.png">
+<img width="600" src="https://user-images.githubusercontent.com/5343215/40284053-56ab8642-5c4e-11e8-9065-a0aced2a27ff.png">
 
 ## Skills
 - Java
@@ -104,3 +105,12 @@ We implemented a website based on out framework. This website offered two key fe
     </li>
 
   </ul>
+
+
+## Servlet API
+### Add an appointment
+/appointment?action=add&firstname=james&lastname=liu&phonenumber=9871222234&email=james@mum.edu&starttime=2018-05-09.09:15:00&endtime=2018-05-09.10:15:00
+### Get appointments of a day
+/appointment?action=list&date=2018-04-21
+### Confirm an appointment
+/appointment?action=confirm&staffname=manager
