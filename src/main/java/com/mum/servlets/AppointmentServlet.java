@@ -1,19 +1,20 @@
 package com.mum.servlets;
 
 import com.google.gson.Gson;
+import com.mum.dao.DataAccessFactory;
 import com.mum.dto.AppointmentDTO;
 import com.mum.model.Appointment;
 import com.mum.model.Client;
 import com.mum.model.Request;
 import com.mum.model.Timeslot;
 import com.mum.model.enums.RequestState;
-import com.mum.model.enums.RequestType;
 import com.mum.model.enums.UserType;
 import com.mum.pattern.flyweight.ClientFactory;
 import com.mum.pattern.memento.CareTaker;
 import com.mum.pattern.memento.Memento;
 import com.mum.pattern.memento.ProcessState;
 import com.mum.service.MakeRequestCommand;
+import com.mum.service.ProcessAppointmentCommand;
 import com.mum.service.RequestCommand;
 
 import javax.servlet.ServletException;
@@ -57,14 +58,18 @@ public class AppointmentServlet extends BaseTemplate {
     }
   }
 
-  private void confirmAppointment(HttpServletRequest req, HttpServletResponse resp) throws IOException, SQLException {
+  private void confirmAppointment(HttpServletRequest req, HttpServletResponse resp) throws IOException, SQLException, IllegalAccessException, InstantiationException, ClassNotFoundException {
 
-    Request request = new Request();
-    request.setAppointmentId(Integer.valueOf(req.getParameter("appointmentId")));
-    request.setType(RequestType.MAKE);
-    request.setState(RequestState.ACCEPT);
-    request.setDatetimeCreated(new Date());
-    requestDao.insert(request);
+    // Request request = new Request();
+    // request.setAppointmentId(Integer.valueOf(req.getParameter("appointmentId")));
+    // request.setType(RequestType.MAKE);
+    // request.setState(RequestState.ACCEPT);
+    // request.setDatetimeCreated(new Date());
+    // requestDao.insert(request);
+    ProcessAppointmentCommand cmd = new ProcessAppointmentCommand(Integer.valueOf(req.getParameter("appointmentId")));
+    cmd.setWorker(DataAccessFactory.createRequestDao());
+    cmd.execute();
+
     revitQueryCache.invalidate("appoCache");
     resp.sendRedirect(req.getContextPath() + "/appointment?action=list");
 

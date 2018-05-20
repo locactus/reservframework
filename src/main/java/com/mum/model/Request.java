@@ -62,4 +62,15 @@ public class Request  {
                 ", datetimeCreated='" + datetimeCreated + '\'' +
                 '}';
     }
+
+    public void processing() {
+        switch (this.state) {
+            case PENDING:
+                state = RequestState.ACCEPT;
+                break;
+            case ACCEPT:
+                // do nothing
+                break;
+        }
+    }
 }
