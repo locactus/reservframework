@@ -15,7 +15,7 @@ public class ProcessAppointmentCommand extends RequestCommand {
     @Override
     public void execute() throws SQLException {
         Request request = requestDao.getLatestRequestByAppointmentId(appointmentId);
-        request.processing(); // change the state automatically
+        request.processing(); // change the state automatically by State pattern
         this.requestDao.insert(request);
     }
 }
