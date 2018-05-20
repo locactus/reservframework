@@ -13,59 +13,12 @@ public class StaffDAO extends BaseDAO implements IStaffDAO {
 
     @Override
     public Staff getStaffByStaffId(int staffId) throws SQLException {
-        conn = DataSource.getInstance().getConnection();
-        Staff staff = null;
-        String sql = "SELECT * FROM staff WHERE staffId = ?";
-        PreparedStatement pstmt = conn.prepareStatement(sql);
-        pstmt.setInt(1, staffId);
-        ResultSet rset = pstmt.executeQuery();
-        this.lastExecutedStatement = pstmt.toString();
-
-        if(rset.next()) {
-            String firstName = rset.getString("firstname");
-            String lastName = rset.getString("lastname");
-            String phoneNumber = rset.getString("phonenumber");
-            String email = rset.getString("email");
-
-            staff = new Staff();
-            staff.setStaffId(staffId);
-            staff.setFirstName(firstName);
-            staff.setLastName(lastName);
-            staff.setPhoneNumber(phoneNumber);
-            staff.setEmail(email);
-        }
-        rset.close();
-        pstmt.close();
-        conn.close();
-        return staff;
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public Staff getStaffByUserName(String userName) throws SQLException {
-        conn = DataSource.getInstance().getConnection();
-        String sql = "SELECT * FROM staff WHERE userName = ?";
-        PreparedStatement pstmt = conn.prepareStatement(sql);
-        pstmt.setString(1, userName);
-        this.lastExecutedStatement = pstmt.toString();
-        ResultSet rset = pstmt.executeQuery();
-        Staff staff = null;
-        if (rset.next()) {
-            String firstName = rset.getString("firstname");
-            String lastName = rset.getString("lastname");
-            String phoneNumber = rset.getString("phonenumber");
-            String email = rset.getString("email");
-
-            staff = new Staff();
-            staff.setUserName(userName);
-            staff.setFirstName(firstName);
-            staff.setLastName(lastName);
-            staff.setPhoneNumber(phoneNumber);
-            staff.setEmail(email);
-        }
-        pstmt.close();
-        pstmt.close();
-        conn.close();
-        return staff;
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override

@@ -68,7 +68,6 @@ public abstract class BaseTemplate  extends HttpServlet {
                     director.build();
                     return ((AppointmentDTOBuilder) builder).get();
                 })
-                // .map(apointment -> mapToDTO(apointment))
 
                 .collect(Collectors.toList());
     }
@@ -80,14 +79,12 @@ public abstract class BaseTemplate  extends HttpServlet {
             .initialCapacity(10)
             .maximumSize(100)
             .recordStats()
-            // 设置缓存的移除通知
             .removalListener(new RemovalListener<Object, Object>() {
                 @Override
                 public void onRemoval(RemovalNotification<Object, Object> notification) {
                     System.out.println(notification.getKey() + " is removed, cause is " + notification.getCause());
                 }
             })
-            // build方法中可以指定CacheLoader，在缓存不存在时通过CacheLoader的实现自动加载缓存
             .build(new CacheLoader<String, List>() {
                 @Override
                 public List load(String arg0) throws Exception {
