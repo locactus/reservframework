@@ -2,6 +2,8 @@
 ## Reservation Framework
 A framework to implement the reservation system.
 
+Presentation: [wiki](https://github.com/asd-framework/reservframework/wiki)
+
 We designed a reservation web framework to implement the reservation-like systems more easily and quickly.
 
 #### Team members:
